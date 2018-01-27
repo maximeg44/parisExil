@@ -1,9 +1,29 @@
-{% if jeunes_fin_hebergement_list %}
-	 <ul>
-	 	{% for Personne in jeunes_fin_hebergement_list %}
-	 		<li><a href="/webApplication/{{ Personne.idpersonne }}/">{{ Personne.nom }} {{ Personne.prenom }}</a></li>
-	 	{% endfor %}
-    </ul>
-{% else %}
-    <p>No polls are available.</p>
-{% endif %}
+{% load staticfiles %}
+<!DOCTYPE html>
+<html>
+
+	<head>
+	<meta charset="utf-8">
+	<title>Paris Exil</title>
+	<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+	<link href="https://fonts.googleapis.com/css?family=Lobster&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+	<link rel="stylesheet" href="{% static 'css/webApplication.css' %}">
+	</head>
+	
+	<body>
+	<div class="page-header">
+    	<h1><a href="/">Paris d'exil</a></h1>
+	</div>
+		{% if jeunes_fin_hebergement_list %}
+	 		<ul>
+	 			{% for Personne in jeunes_fin_hebergement_list %}
+	 				<li><a href="/webApplication/{{ Personne.idpersonne }}/">{{ Personne.nom }} {{ Personne.prenom }}</a></li>
+	 			{% endfor %}
+    		</ul>
+		{% else %}
+    		<p>No polls are available.</p>
+		{% endif %}
+	</body>
+	
+	
+</html>
