@@ -1,7 +1,7 @@
 {% if jeunes_fin_hebergement_list %}
 	 <ul>
-	 	{% for Jeune in jeunes_fin_hebergement_list %}
-	 		<li><a href="/webApplication/{{ Jeune.idpersonne }}/"{{ Jeune.idpersonne}}</a></li>
+	 	{% for Personne in jeunes_fin_hebergement_list %}
+	 		<li><a href="/webApplication/{{ Personne.idpersonne }}/">{{ Personne.nom }} {{ Personne.prenom }}</a></li>
 	 	{% endfor %}
     </ul>
 {% else %}
