@@ -1,23 +1,46 @@
-{% load staticfiles %}
+{% load static %}
 <!DOCTYPE html>
 <html>
 
 	<head>
 	<meta charset="utf-8">
 	<title>Paris Exil</title>
-	<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
 	<link href="https://fonts.googleapis.com/css?family=Lobster&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+	<script scr="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
 	<link rel="stylesheet" href="{% static 'css/webApplication.css' %}">
 	</head>
 	
 	<body>
-	<div class="page-header">
-    	<h1><a href="/">Paris d'exil</a></h1>
-	</div>
+		<nav class="navbar navbar-default">
+			<div class="container-fluid">
+			
+				<!-- Header -->
+				<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#topNavBar"
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+				</button>
+				</div>
+			
+			
+				<!-- Item -->
+				<div class="collapse navbar-collapse" id="topNavBar">
+					<ul class="nav navbar-nav navbar-left">
+						<li><h1><a href="#">  Paris d'exil  </a></h1></li>
+						<li><h1><a href="#">  Jeunes  </a></h1></li>
+						<li><h1><a href="#">  Hébergeurs  </a></h1></li>
+						<li><h1><a href="#">  Calendrier  </a></h1></li>
+					</ul>
+				</div>
+			</div>
+		</nav>
 		{% if jeunes_fin_hebergement_list %}
 	 		<ul>
-	 			{% for Personne in jeunes_fin_hebergement_list %}
-	 				<li><a href="/webApplication/{{ Personne.idpersonne }}/">{{ Personne.nom }} {{ Personne.prenom }}</a></li>
+	 			{% for jeune in jeunes_fin_hebergement_list %}
+	 				<li><a href="/webApplication/detailJeune/{{ jeune.idpersonne }}/">{{ jeune.nom }} {{ jeune.prenom }}</a></li>
 	 			{% endfor %}
     		</ul>
 		{% else %}
