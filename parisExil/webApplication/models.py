@@ -32,6 +32,9 @@ class Avocat(models.Model):
 
     def set_numtel(self, value):
         self.__numtel = value
+    
+    def __str__(self):
+        return self.nom
 
     idavocat = models.AutoField(db_column='idAvocat', primary_key=True)  # Field name made lowercase.
     nom = models.CharField(db_column='nom', max_length=250)
@@ -40,9 +43,7 @@ class Avocat(models.Model):
     class Meta:
         managed = False
         db_table = 'Avocat'
-    idavocat = property(get_idavocat, set_idavocat, None, None)
-    nom = property(get_nom, set_nom, None, None)
-    numtel = property(get_numtel, set_numtel, None, None)
+
 
 
 class Disponibilite(models.Model):
@@ -77,6 +78,9 @@ class Disponibilite(models.Model):
 
     def del_datefin(self):
         del self.__datefin
+        
+    def __str__(self):
+        return self.adressemail
 
     datedebut = models.DateField(db_column='dateDebut', primary_key=True)  # Field name made lowercase.
     datefin = models.DateField(db_column='dateFin', blank=True, null=True)  # Field name made lowercase.
@@ -108,6 +112,9 @@ class Ecole(models.Model):
 
     def set_ville(self, value):
         self.__ville = value
+        
+    def __str__(self):
+        return self.libelle
 
     idecole = models.AutoField(db_column='idEcole', primary_key=True)  # Field name made lowercase.
     libelle = models.CharField(db_column='libelle', max_length=250)
@@ -116,9 +123,7 @@ class Ecole(models.Model):
     class Meta:
         managed = False
         db_table = 'Ecole'
-    idecole = property(get_idecole, None, None, None)
-    libelle = property(get_libelle, set_libelle, None, None)
-    ville = property(get_ville, set_ville, None, None)
+
 
 
 class Hebergeur(models.Model):
@@ -189,6 +194,9 @@ class Hebergeur(models.Model):
 
     def del_nblitdouble(self):
         del self.__nblitdouble
+    
+        def __str__(self):
+            return self.adressemail
 
     adressemail = models.CharField(db_column='adresseMail', primary_key=True, max_length=250)  # Field name made lowercase.
     facebook = models.CharField(db_column='facebook', max_length=250, blank=True, null=True)
@@ -321,6 +329,9 @@ class Jeune(models.Model):
 
     def set_pays(self, value):
         self.__pays = value
+    
+    def __str__(self):
+        return self.datenaissance
 
     datenaissance = models.DateField(db_column='dateNaissance')  # Field name made lowercase.
     datepriseencharge = models.DateField(db_column='datePriseEnCharge')  # Field name made lowercase.
@@ -341,21 +352,6 @@ class Jeune(models.Model):
     class Meta:
         managed = False
         db_table = 'Jeune'
-    datenaissance = property(get_datenaissance, set_datenaissance, None, None)
-    datepriseencharge = property(get_datepriseencharge, set_datepriseencharge, None, None)
-    signalerpar = property(get_signalerpar, set_signalerpar, None, None)
-    suivipar = property(get_suivipar, set_suivipar, None, None)
-    suiviadji = property(get_suiviadji, set_suiviadji, None, None)
-    nomjuge = property(get_nomjuge, set_nomjuge, None, None)
-    demie = property(get_demie, set_demie, None, None)
-    recours = property(get_recours, set_recours, None, None)
-    appel = property(get_appel, set_appel, None, None)
-    testosseux = property(get_testosseux, set_testosseux, None, None)
-    sante = property(get_sante, set_sante, None, None)
-    idpersonne = property(get_idpersonne, None, None, None)
-    idecole = property(get_idecole, set_idecole, None, None)
-    idavocat = property(get_idavocat, set_idavocat, None, None)
-    pays = property(get_pays, set_pays, None, None)
 
 
 class Langue(models.Model):
@@ -368,7 +364,10 @@ class Langue(models.Model):
     class Meta:
         managed = False
         db_table = 'Langue'
-    libelle = property(get_libelle, None, None, None)
+        
+    def __str__(self):
+        return self.libelle
+
 
 
 class Membre(models.Model):
@@ -391,6 +390,9 @@ class Membre(models.Model):
 
     def set_fonction(self, value):
         self.__fonction = value
+        
+    def __str__(self):
+        return self.idpersonne
 
     facebook = models.CharField(db_column='facebook', max_length=250, blank=True, null=True)
     fonction = models.CharField(db_column='fonction', max_length=250, blank=True, null=True)
@@ -399,9 +401,7 @@ class Membre(models.Model):
     class Meta:
         managed = False
         db_table = 'Membre'
-    facebook = property(get_facebook, set_facebook, None, None)
-    fonction = property(get_fonction, set_fonction, None, None)
-    idpersonne = property(get_idpersonne, None, None, None)
+
 
 
 class Nationalite(models.Model):
@@ -412,8 +412,8 @@ class Nationalite(models.Model):
         db_table = 'Nationalite'
         
     def __str__(self):
-        return self.pays.__str__()
-    #pays = property(get_pays, set_pays, None, None)
+        return self.pays
+
     
     def get_pays(self):
         return self.__pays
@@ -469,11 +469,7 @@ class Personne(models.Model):
     class Meta:
         managed = False
         db_table = 'Personne'
-    idpersonne = property(get_idpersonne, None, None, None)
-    nom = property(get_nom, set_nom, None, None)
-    prenom = property(get_prenom, set_prenom, None, None)
-    numtel = property(get_numtel, set_numtel, None, None)
-    commentaire = property(get_commentaire, set_commentaire, None, None)
+
 
 
 class Accueillir(models.Model):
@@ -736,6 +732,9 @@ class Parler(models.Model):
 
     def get_idpersonne(self):
         return self.__idpersonne
+    
+    def __str__(self):
+        return self.libelle
 
     libelle = models.OneToOneField(Langue, models.DO_NOTHING, db_column='libelle', primary_key=True)
     idpersonne = models.ForeignKey(Personne, models.DO_NOTHING, db_column='idPersonne')  # Field name made lowercase.

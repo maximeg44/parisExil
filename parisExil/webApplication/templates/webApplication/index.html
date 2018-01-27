@@ -1,0 +1,9 @@
+{% if jeunes_fin_hebergement_list %}
+	 <ul>
+	 	{% for Jeune in jeunes_fin_hebergement_list %}
+	 		<li><a href="/webApplication/{{ Jeune.idpersonne }}/"{{ Jeune.idpersonne}}</a></li>
+	 	{% endfor %}
+    </ul>
+{% else %}
+    <p>No polls are available.</p>
+{% endif %}
