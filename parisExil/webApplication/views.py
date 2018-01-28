@@ -9,12 +9,15 @@ from collections import namedtuple
 def index(request):
     #jeunes_fin_hebergement_list = Jeune.objects.all()
     #jeunes_fin_hebergement_list = {'nom': 'nom', 'prenom' :'prenom', 'dateFin' : 'dateFin', 'idPersonne': 'idPersonne'}
+    jeunes_fin_hebergement_list = namedtuple('J', 'nom, prenom, dateFin, id')
     with connection.cursor() as cursor:
         cursor.execute("SELECT nom, prenom, accueillir.dateFin, Personne.idPersonne FROM accueillir, Personne where Personne.idPersonne = accueillir.idPersonne")
-        row = cursor.fetchall()
+        jeunes_fin_hebergement_list = cursor.fetchall()
         cursor.close()
+
+        
     
-    jeunes_fin_hebergement_list = row
+   # jeunes_fin_hebergement_list = row
     template = loader.get_template('webApplication/index.html')
     context = {
         'jeunes_fin_hebergement_list' : jeunes_fin_hebergement_list,
