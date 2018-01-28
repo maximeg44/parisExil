@@ -2,6 +2,8 @@ from django.http import HttpResponse
 from django.template import loader
 from .models import Personne, Jeune
 from django.shortcuts import render, get_object_or_404
+import datetime
+from webApplication.models import Accueillir
 
 def index(request):
     jeunes_fin_hebergement_list = Jeune.objects.all()

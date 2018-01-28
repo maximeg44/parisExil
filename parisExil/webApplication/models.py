@@ -6,6 +6,7 @@
 #   * Remove `managed = False` lines if you wish to allow Django to create, modify, and delete the table
 # Feel free to rename the models, but don't rename db_table values or field names.
 from django.db import models
+import datetime
 
 
 class Avocat(models.Model):
@@ -218,7 +219,8 @@ class Jeune(models.Model):
     def get_fin_hebergement(self):
         date_fin = Accueillir.objects.order_by('dateFin')[:1].get(pk=self.get_idpersonne())
         #date_fin = Accueillir.objects.get(pk=self.get_idpersonne())
-        date_fin = self.idpersonne.nom
+        #date_fin = self.idpersonne.nom
+        #date_fin.strftime("%d/%m/%Y")
         return date_fin
         
 
@@ -433,45 +435,48 @@ class Nationalite(models.Model):
 class Personne(models.Model):
     
     def get_fin_hebergement(self):
-        date_fin = Accueillir.objects.order_by('datefin')[:1]
+        #date_fin = Accueillir.objects.order_by('datefin')[:1]
+        date_fin = Accueillir.objects.order_by('datefin').get(pk=self.get_idpersonne())[:1]
         #date_fin = Accueillir.objects.get(pk=self.get_idpersonne())
+        date = date_fin.dateFin
+        #date_fin = Accueillir.objects.all()
         #date_fin = self.nom
-        return date_fin._fields.__str__()
-
+        return date.strftime("%d/%m/%Y")
+        
+        
     def get_idpersonne(self):
         return self.idpersonne
 
 
     def get_nom(self):
-        return self.__nom
+        return self.nom
 
 
     def get_prenom(self):
-        return self.__prenom
+        return self.prenom
 
 
     def get_numtel(self):
-        return self.__numtel
+        return self.numtel
 
 
     def get_commentaire(self):
-        return self.__commentaire
+        return self.commentaire
 
 
     def set_nom(self, value):
-        self.__nom = value
+        self.nom = value
 
 
     def set_prenom(self, value):
-        self.__prenom = value
+        self.prenom = value
 
 
     def set_numtel(self, value):
-        self.__numtel = value
-
+        self.numtel = value
 
     def set_commentaire(self, value):
-        self.__commentaire = value
+        self.commentaire = value
 
     idpersonne = models.AutoField(db_column='idPersonne', primary_key=True)  # Field name made lowercase.
     nom = models.CharField(db_column='nom', max_length=250)
