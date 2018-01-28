@@ -42,7 +42,7 @@
 	 			{% for jeune in jeunes_fin_hebergement_list %}
 	 				<li><a href="/webApplication/detailJeune/{{ jeune.idpersonne }}/">
 					<span class="glyphicon glyphicon-user" aria-hidden="true"></span></a>&nbsp;&nbsp;
-					{{ jeune.idpersonne.nom }} {{ jeune.idpersonne.prenom }} {{jeune.idpersonne.get_fin_hebergement}}</li>
+					{{ jeune }} </li>
 	 			{% endfor %}
     		</ul>
 		{% else %}
