@@ -4,7 +4,7 @@ from .models import Personne, Jeune
 from django.shortcuts import render, get_object_or_404
 
 def index(request):
-    jeunes_fin_hebergement_list = Personne.objects.all()
+    jeunes_fin_hebergement_list = Jeune.objects.all()
     template = loader.get_template('webApplication/index.html')
     context = {
         'jeunes_fin_hebergement_list' : jeunes_fin_hebergement_list,

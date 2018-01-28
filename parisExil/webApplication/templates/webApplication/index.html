@@ -40,7 +40,7 @@
 		{% if jeunes_fin_hebergement_list %}
 	 		<ul></br>
 	 			{% for jeune in jeunes_fin_hebergement_list %}
-	 				<li><a href="/webApplication/detailJeune/{{ jeune.idpersonne }}/"><span class="glyphicon glyphicon-user" aria-hidden="true"></span>&nbsp;&nbsp;{{ jeune.nom }} {{ jeune.prenom }}</a></li>
+	 				<li><a href="/webApplication/detailJeune/{{ jeune.idpersonne }}/"><span class="glyphicon glyphicon-user" aria-hidden="true"></span>&nbsp;&nbsp;{{ jeune.idpersonne.nom }} {{ jeune.idpersonne.prenom }}</a></li>
 	 			{% endfor %}
     		</ul>
 		{% else %}

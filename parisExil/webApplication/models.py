@@ -214,124 +214,131 @@ class Hebergeur(models.Model):
 
 
 class Jeune(models.Model):
+    
+    def get_fin_hebergement(self):
+        date_fin = Accueillir.objects.order_by('dateFin')[:1].get(pk=self.get_idpersonne())
+        #date_fin = Accueillir.objects.get(pk=self.get_idpersonne())
+        date_fin = self.idpersonne.nom
+        return date_fin
+        
 
     def get_datenaissance(self):
-        return self.__datenaissance
+        return self.datenaissance
 
 
     def get_datepriseencharge(self):
-        return self.__datepriseencharge
+        return self.datepriseencharge
 
 
     def get_signalerpar(self):
-        return self.__signalerpar
+        return self.signalerpar
 
 
     def get_suivipar(self):
-        return self.__suivipar
+        return self.suivipar
 
 
     def get_suiviadji(self):
-        return self.__suiviadji
+        return self.suiviadji
 
 
     def get_nomjuge(self):
-        return self.__nomjuge
+        return self.nomjuge
 
 
     def get_demie(self):
-        return self.__demie
+        return self.demie
 
 
     def get_recours(self):
-        return self.__recours
+        return self.recours
 
 
     def get_appel(self):
-        return self.__appel
+        return self.appel
 
 
     def get_testosseux(self):
-        return self.__testosseux
+        return self.testosseux
 
 
     def get_sante(self):
-        return self.__sante
+        return self.sante
 
 
     def get_idpersonne(self):
-        return self.__idpersonne
+        return self.idpersonne
 
 
     def get_idecole(self):
-        return self.__idecole
+        return self.idecole
 
 
     def get_idavocat(self):
-        return self.__idavocat
+        return self.idavocat
 
 
     def get_pays(self):
-        return self.__pays
+        return self.pays
 
 
     def set_datenaissance(self, value):
-        self.__datenaissance = value
+        self.datenaissance = value
 
 
     def set_datepriseencharge(self, value):
-        self.__datepriseencharge = value
+        self.datepriseencharge = value
 
 
     def set_signalerpar(self, value):
-        self.__signalerpar = value
+        self.signalerpar = value
 
 
     def set_suivipar(self, value):
-        self.__suivipar = value
+        self.suivipar = value
 
 
     def set_suiviadji(self, value):
-        self.__suiviadji = value
+        self.suiviadji = value
 
 
     def set_nomjuge(self, value):
-        self.__nomjuge = value
+        self.nomjuge = value
 
 
     def set_demie(self, value):
-        self.__demie = value
+        self.demie = value
 
 
     def set_recours(self, value):
-        self.__recours = value
+        self.recours = value
 
 
     def set_appel(self, value):
-        self.__appel = value
+        self.appel = value
 
 
     def set_testosseux(self, value):
-        self.__testosseux = value
+        self.testosseux = value
 
 
     def set_sante(self, value):
-        self.__sante = value
+        self.sante = value
 
 
     def set_idecole(self, value):
-        self.__idecole = value
+        self.idecole = value
 
 
     def set_idavocat(self, value):
-        self.__idavocat = value
+        self.idavocat = value
 
 
     def set_pays(self, value):
-        self.__pays = value
+        self.pays = value
     
     def __str__(self):
-        return self.datenaissance
+        return self.idpersonne
 
     datenaissance = models.DateField(db_column='dateNaissance')  # Field name made lowercase.
     datepriseencharge = models.DateField(db_column='datePriseEnCharge')  # Field name made lowercase.
@@ -424,9 +431,15 @@ class Nationalite(models.Model):
 
 
 class Personne(models.Model):
+    
+    def get_fin_hebergement(self):
+        date_fin = Accueillir.objects.order_by('datefin')[:1]
+        #date_fin = Accueillir.objects.get(pk=self.get_idpersonne())
+        #date_fin = self.nom
+        return date_fin._fields.__str__()
 
     def get_idpersonne(self):
-        return self.__idpersonne
+        return self.idpersonne
 
 
     def get_nom(self):
@@ -473,33 +486,36 @@ class Personne(models.Model):
 
 
 class Accueillir(models.Model):
+    
+    def __str__(self):
+        return self.datefin
 
     def get_datedebut(self):
-        return self.__datedebut
+        return self.datedebut
 
 
     def get_datefin(self):
-        return self.__datefin
+        return self.datefin
 
 
     def get_commentaire(self):
-        return self.__commentaire
+        return self.commentaire
 
 
     def get_adressemail(self):
-        return self.__adressemail
+        return self.adressemail
 
 
     def get_idpersonne(self):
-        return self.__idpersonne
+        return self.idpersonne
 
 
     def get_idpersonne_1(self):
-        return self.__idpersonne_1
+        return self.idpersonne_1
 
 
     def get_idpersonne_2(self):
-        return self.__idpersonne_2
+        return self.idpersonne_2
 
 
     def set_datedebut(self, value):
@@ -507,11 +523,11 @@ class Accueillir(models.Model):
 
 
     def set_datefin(self, value):
-        self.__datefin = value
+        self.datefin = value
 
 
     def set_commentaire(self, value):
-        self.__commentaire = value
+        self.commentaire = value
 
     datedebut = models.DateField(db_column='dateDebut', blank=True, null=True)  # Field name made lowercase.
     datefin = models.DateField(db_column='dateFin', blank=True, null=True)  # Field name made lowercase.
@@ -531,15 +547,15 @@ class Accueillir(models.Model):
 class Apprecier(models.Model):
 
     def get_adressemail(self):
-        return self.__adressemail
+        return self.adressemail
 
 
     def get_idpersonne(self):
-        return self.__idpersonne
+        return self.idpersonne
 
 
     def get_idpersonne_1(self):
-        return self.__idpersonne_1
+        return self.idpersonne_1
 
     adressemail = models.OneToOneField(Hebergeur, models.DO_NOTHING, db_column='adresseMail', primary_key=True)  # Field name made lowercase.
     idpersonne = models.OneToOneField(Personne, models.DO_NOTHING, related_name='unJeune', db_column='idPersonne')  # Field name made lowercase.
