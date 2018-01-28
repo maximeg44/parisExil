@@ -442,6 +442,7 @@ class Personne(models.Model):
         #date_fin = Accueillir.objects.all()
         #date_fin = self.nom
         return date.strftime("%d/%m/%Y")
+    
         
         
     def get_idpersonne(self):
