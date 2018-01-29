@@ -40,9 +40,28 @@
 		{% if jeunes_fin_hebergement_list %}
 	 		<ul></br>
 	 			{% for jeune in jeunes_fin_hebergement_list %}
-	 				<li><a href="/webApplication/detailJeune/{{ jeune.idpersonne.idpersonne }}/">
-					<span class="glyphicon glyphicon-user" aria-hidden="true"></span></a>&nbsp;&nbsp;
-					{{ jeune.idpersonne.nom }} {{jeune.idpersonne.prenom}} {{jeune.datefin}}</li>
+	 				<li>
+					<table align="left">
+					<label><h1>Affichage des jeunes sans hébergement dans les 7 jours</h1></label> </br></br></br>
+					<tr>
+						<th><span class="glyphicon glyphicon-user" aria-hidden="true"></span></th> 
+						<th>Nom</th>
+						<th>Prenom</th>
+						<th>date de fin d'hébergement</th>
+					</tr>
+					<tr>
+						<td>
+							<a href="/webApplication/detailJeune/{{ jeune.idpersonne.idpersonne }}/">
+							<span class="glyphicon glyphicon-user" aria-hidden="true"></span></a>&nbsp;&nbsp;
+						</td>
+						<td>
+							{{ jeune.idpersonne.nom }}
+						</td>
+						<td>{{jeune.idpersonne.prenom}}</td>
+						<td>{{jeune.datefin}}</td>
+					</tr>
+					</li>
+					</table>
 	 			{% endfor %}
     		</ul>
 		{% else %}

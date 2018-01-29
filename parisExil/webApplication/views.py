@@ -24,7 +24,7 @@ def index(request):
     delai = timedelta(7)
     end_date = start_date + delai
     #jeunes_fin_hebergement_list = Accueillir.objects.filter(datefin = [start_date,end_date])
-    jeunes_fin_hebergement_list = Accueillir.objects.all().filter(datefin__lte=end_date)
+    jeunes_fin_hebergement_list = Accueillir.objects.all().filter(datefin__lte=end_date) 
     
     
    # jeunes_fin_hebergement_list = row
