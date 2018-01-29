@@ -1,13 +1,9 @@
 from django.http import HttpResponse
 from django.template import loader
-from .models import Personne, Jeune
+from .models import Personne
 from django.shortcuts import render, get_object_or_404
 from webApplication.models import Accueillir
-from django.db import connection
-from collections import namedtuple
-import datetime
 from datetime import datetime
-from test.datetimetester import DAY
 from _datetime import timedelta
 
 def index(request):
@@ -23,7 +19,7 @@ def index(request):
 
 def detailJeune(request, jeune_id):
     jeune = get_object_or_404(Personne, pk=jeune_id)
-    return render(request, 'webApplication/detailJeune', {'jeune' : jeune})
+    return render(request, "webApplication/detailJeune.html", {'jeune' : jeune})
 
 
 
