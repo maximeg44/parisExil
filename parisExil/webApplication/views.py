@@ -27,3 +27,7 @@ def index(request):
 def detailJeune(request, jeune_id):
     jeune = get_object_or_404(Personne, pk=jeune_id)
     return render(request, 'webApplication/detailJeune', {'jeune' : jeune})
+
+
+
+

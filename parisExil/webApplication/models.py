@@ -50,35 +50,35 @@ class Avocat(models.Model):
 class Disponibilite(models.Model):
 
     def get_datedebut(self):
-        return self.__datedebut
+        return self.datedebut
 
 
     def get_datefin(self):
-        return self.__datefin
+        return self.datefin
 
 
     def get_adressemail(self):
-        return self.__adressemail
+        return self.adressemail
 
 
     def set_datedebut(self, value):
-        self.__datedebut = value
+        self.datedebut = value
 
 
     def set_datefin(self, value):
-        self.__datefin = value
+        self.datefin = value
 
 
     def set_adressemail(self, value):
-        self.__adressemail = value
+        self.adressemail = value
 
 
     def del_datedebut(self):
-        del self.__datedebut
+        del self.datedebut
 
 
     def del_datefin(self):
-        del self.__datefin
+        del self.datefin
         
     def __str__(self):
         return self.adressemail
@@ -96,23 +96,23 @@ class Disponibilite(models.Model):
 class Ecole(models.Model):
 
     def get_idecole(self):
-        return self.__idecole
+        return self.idecole
 
 
     def get_libelle(self):
-        return self.__libelle
+        return self.libelle
 
 
     def get_ville(self):
-        return self.__ville
+        return self.ville
 
 
     def set_libelle(self, value):
-        self.__libelle = value
+        self.libelle = value
 
 
     def set_ville(self, value):
-        self.__ville = value
+        self.ville = value
         
     def __str__(self):
         return self.libelle
@@ -130,71 +130,71 @@ class Ecole(models.Model):
 class Hebergeur(models.Model):
 
     def get_adressemail(self):
-        return self.__adressemail
+        return self.adressemail
 
 
     def get_facebook(self):
-        return self.__facebook
+        return self.facebook
 
 
     def get_signaturecharte(self):
-        return self.__signaturecharte
+        return self.signaturecharte
 
 
     def get_adressepostale(self):
-        return self.__adressepostale
+        return self.adressepostale
 
 
     def get_capaciteaccueil(self):
-        return self.__capaciteaccueil
+        return self.capaciteaccueil
 
 
     def get_nblitsimple(self):
-        return self.__nblitsimple
+        return self.nblitsimple
 
 
     def get_nblitdouble(self):
-        return self.__nblitdouble
+        return self.nblitdouble
 
 
     def get_idpersonne(self):
-        return self.__idpersonne
+        return self.idpersonne
 
 
     def set_adressemail(self, value):
-        self.__adressemail = value
+        self.adressemail = value
 
 
     def set_facebook(self, value):
-        self.__facebook = value
+        self.facebook = value
 
 
     def set_signaturecharte(self, value):
-        self.__signaturecharte = value
+        self.signaturecharte = value
 
 
     def set_adressepostale(self, value):
-        self.__adressepostale = value
+        self.adressepostale = value
 
 
     def set_capaciteaccueil(self, value):
-        self.__capaciteaccueil = value
+        self.capaciteaccueil = value
 
 
     def set_nblitsimple(self, value):
-        self.__nblitsimple = value
+        self.nblitsimple = value
 
 
     def set_nblitdouble(self, value):
-        self.__nblitdouble = value
+        self.nblitdouble = value
 
 
     def del_nblitsimple(self):
-        del self.__nblitsimple
+        del self.nblitsimple
 
 
     def del_nblitdouble(self):
-        del self.__nblitdouble
+        del self.nblitdouble
     
         def __str__(self):
             return self.adressemail
@@ -366,7 +366,7 @@ class Jeune(models.Model):
 class Langue(models.Model):
 
     def get_libelle(self):
-        return self.__libelle
+        return self.libelle
 
     libelle = models.CharField(db_column='libelle', primary_key=True, max_length=250)
 
@@ -382,23 +382,23 @@ class Langue(models.Model):
 class Membre(models.Model):
 
     def get_facebook(self):
-        return self.__facebook
+        return self.facebook
 
 
     def get_fonction(self):
-        return self.__fonction
+        return self.fonction
 
 
     def get_idpersonne(self):
-        return self.__idpersonne
+        return self.idpersonne
 
 
     def set_facebook(self, value):
-        self.__facebook = value
+        self.facebook = value
 
 
     def set_fonction(self, value):
-        self.__fonction = value
+        self.fonction = value
         
     def __str__(self):
         return self.idpersonne
@@ -425,11 +425,11 @@ class Nationalite(models.Model):
 
     
     def get_pays(self):
-        return self.__pays
+        return self.pays
 
 
     def set_pays(self, value):
-        self.__pays = value
+        self.pays = value
 
 
 class Personne(models.Model):
@@ -643,15 +643,15 @@ class AuthUserUserPermissions(models.Model):
 class Deprecier(models.Model):
 
     def get_adressemail(self):
-        return self.__adressemail
+        return self.adressemail
 
 
     def get_idpersonne(self):
-        return self.__idpersonne
+        return self.idpersonne
 
 
     def get_idpersonne_1(self):
-        return self.__idpersonne_1
+        return self.idpersonne_1
 
     adressemail = models.OneToOneField(Hebergeur, models.DO_NOTHING, db_column='adresseMail', primary_key=True)  # Field name made lowercase.
     idpersonne = models.OneToOneField(Personne, models.DO_NOTHING, related_name='jeune' , db_column='idPersonne')  # Field name made lowercase.
@@ -711,11 +711,11 @@ class DjangoSession(models.Model):
 class Entente(models.Model):
 
     def get_idpersonne(self):
-        return self.__idpersonne
+        return self.idpersonne
 
 
     def get_idpersonne_1(self):
-        return self.__idpersonne_1
+        return self.idpersonne_1
 
     idpersonne = models.OneToOneField(Personne, models.DO_NOTHING, related_name='leJeune', db_column='idPersonne', primary_key=True)  # Field name made lowercase.
     idpersonne_1 = models.OneToOneField(Personne, models.DO_NOTHING, related_name='le_Jeune', db_column='idPersonne_1')  # Field name made lowercase.
@@ -730,11 +730,11 @@ class Entente(models.Model):
 class Mesentente(models.Model):
 
     def get_idpersonne(self):
-        return self.__idpersonne
+        return self.idpersonne
 
 
     def get_idpersonne_1(self):
-        return self.__idpersonne_1
+        return self.idpersonne_1
 
     idpersonne = models.OneToOneField(Personne, models.DO_NOTHING, related_name='UnJeune', db_column='idPersonne', primary_key=True)  # Field name made lowercase.
     idpersonne_1 = models.OneToOneField(Personne, models.DO_NOTHING,related_name='Un_Jeune', db_column='idPersonne_1')  # Field name made lowercase.
@@ -749,11 +749,11 @@ class Mesentente(models.Model):
 class Parler(models.Model):
 
     def get_libelle(self):
-        return self.__libelle
+        return self.libelle
 
 
     def get_idpersonne(self):
-        return self.__idpersonne
+        return self.idpersonne
     
     def __str__(self):
         return self.libelle
