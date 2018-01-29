@@ -5,6 +5,10 @@ from django.shortcuts import render, get_object_or_404
 from webApplication.models import Accueillir
 from django.db import connection
 from collections import namedtuple
+import datetime
+from datetime import datetime
+from test.datetimetester import DAY
+from _datetime import timedelta
 
 def index(request):
     #jeunes_fin_hebergement_list = Jeune.objects.all()
@@ -15,9 +19,13 @@ def index(request):
         #jeunes_fin_hebergement_list = cursor.fetchall()
         #cursor.close()
     
-    jeunes_fin_hebergement_list = Accueillir.objects.all()
-
-        
+    #jeunes_fin_hebergement_list = Accueillir.objects.all()
+    start_date = datetime.today()
+    delai = timedelta(7)
+    end_date = start_date + delai
+    #jeunes_fin_hebergement_list = Accueillir.objects.filter(datefin = [start_date,end_date])
+    jeunes_fin_hebergement_list = Accueillir.objects.all().filter(datefin__lte=end_date)
+    
     
    # jeunes_fin_hebergement_list = row
     template = loader.get_template('webApplication/index.html')

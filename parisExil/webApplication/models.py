@@ -495,7 +495,7 @@ class Accueillir(models.Model):
     
     def __str__(self):
         return self.datefin
-
+    
     def get_datedebut(self):
         return self.datedebut
 
