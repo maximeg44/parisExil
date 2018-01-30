@@ -39,3 +39,11 @@ table{
 	padding-left: 15px;
 }
 
+
+              input.hidden {
+    position: absolute;
+    left: -9999px;
+}
+
+
+
