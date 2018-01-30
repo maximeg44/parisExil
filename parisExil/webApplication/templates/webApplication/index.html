@@ -13,6 +13,8 @@
 	</head>
 	
 	<body>
+
+		
 		<nav class="navbar navbar-default">
 			<div class="container-fluid">
 			
@@ -37,37 +39,45 @@
 				</div>
 			</div>
 		</nav>
+	<div class="container">
+	<div class="row">
+		<h2>Affichage des jeunes sans hébergement dans les 7 jours</h2>
 		{% if jeunes_fin_hebergement_list %}
-	 		<ul></br>
-	 			{% for jeune in jeunes_fin_hebergement_list %}
-	 				<li>
-					<table align="left">
-					<label><h1>Affichage des jeunes sans hébergement dans les 7 jours</h1></label> </br></br></br>
-					<tr>
-						<th><span class="glyphicon glyphicon-user" aria-hidden="true"></span></th> 
-						<th>Nom</th>
-						<th>Prenom</th>
-						<th>date de fin d'hébergement</th>
-					</tr>
-					<tr>
-						<td>
-							<a href="detailJeune.html">
-							<span class="glyphicon glyphicon-user" aria-hidden="true"></span></a>&nbsp;&nbsp;
-						</td>
-						<td>
-							{{ jeune.idpersonne.nom }}
-						</td>
-						<td>{{jeune.idpersonne.prenom}}</td>
-						<td>{{jeune.datefin}}</td>
-					</tr>
-					</li>
-					</table>
+			<table align="left" class="points_table">
+				<h1></h1>
+				<tr>
+					<thead>
+						<th class="col-xs-7">date de fin d'hébergement</th> 
+						<th class="col-xs-7">Nom</th>
+						<th class="col-xs-7">Prenom</th>
+						<th class="col-xs-7"><span class="glyphicon glyphicon-user" aria-hidden="true"></span></th>
+					</thead>
+				</tr>
+				<tbody class="points_table_scrollbar">
+				{% for jeune in jeunes_fin_hebergement_list %}
+					
+						<tr class="even">
+							<td class="col-xs-7">
+								{{jeune.datefin}}	
+							</td>
+							<td class="col-xs-7">
+								{{ jeune.idpersonne.nom }}
+							</td>
+							<td class="col-xs-7">{{jeune.idpersonne.prenom}}</td>
+							<td class="col-xs-7">
+								<a href="detailJeune.html">
+								<span class="glyphicon glyphicon-user" aria-hidden="true"></span></a>&nbsp;&nbsp;
+							</td>
+						</tr>
+					</tbody>
+					
 	 			{% endfor %}
-    		</ul>
+			</table>
 		{% else %}
     		<p>No polls are available.</p>
 		{% endif %}
 	</body>
 	
-	
+		</div>
+</div>
 </html>

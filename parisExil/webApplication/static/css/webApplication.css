@@ -1,10 +1,11 @@
 h1 a {
-    color: #CD5C5C;
+    color: #D19275;
     font-family: 'Lobster';
 }
 
 body {
     padding-left: 15px;
+    background-color:#ffddcc;
     
 }
 
@@ -20,7 +21,7 @@ list-style-type:none;
 
 
 .navbar-default {
-    background-color: #CD5C5C;
+    background-color: #4d0000;
 }
 
 .nav.navbar-nav.navbar-left li a {
