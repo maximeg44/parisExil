@@ -1,8 +1,8 @@
 from django.http import HttpResponse
 from django.template import loader
-from .models import Personne
+from .models import Personne, Jeune
 from django.shortcuts import render, get_object_or_404
-from webApplication.models import Accueillir
+from webApplication.models import Accueillir, Parler
 from datetime import datetime
 from _datetime import timedelta
 
@@ -18,8 +18,16 @@ def index(request):
     return HttpResponse(template.render(context, request))
 
 def detailJeune(request, jeune_id):
-    jeune = get_object_or_404(Personne, pk=jeune_id)
-    return render(request, "webApplication/detailJeune.html", {'jeune' : jeune})
+    jeune = get_object_or_404(Jeune, pk=jeune_id)
+    liste_langue_parler = Parler.objects.all().filter(idpersonne = jeune_id)
+    template = loader.get_template('webApplication/detailJeune.html')
+    context = {
+        'jeune' : jeune, 
+        'liste_langue_parler' : liste_langue_parler,
+        }
+    return HttpResponse(template.render(context, request))
+
+
 
 
 
