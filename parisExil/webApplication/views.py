@@ -27,6 +27,13 @@ def detailJeune(request, jeune_id):
         }
     return HttpResponse(template.render(context, request))
 
+def dispatcher(request):
+    template = loader.get_template('webApplication/dispatch.html')
+    context = {
+        
+        }
+    return HttpResponse(template.render(context,request))
+
 
 
 
