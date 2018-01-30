@@ -19,12 +19,7 @@ def index(request):
 
 def detailJeune(request, jeune_id):
     jeune = get_object_or_404(Personne, pk=jeune_id)
-    template = loader.get_template('webApplication/detailJeune.html')
-    context = {
-        'jeune' : jeune,
-        }
-    return HttpResponse(template.render(context, request))
-    #return render(request, "webApplication/detailJeune.html", {'jeune' : jeune})
+    return render(request, "webApplication/detailJeune.html", {'jeune' : jeune})
 
 
 
