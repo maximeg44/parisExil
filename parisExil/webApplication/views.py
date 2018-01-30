@@ -5,6 +5,7 @@ from django.shortcuts import render, get_object_or_404
 from webApplication.models import Accueillir, Parler
 from datetime import datetime
 from _datetime import timedelta
+from .models import Hebergeur
 
 def index(request):
     start_date = datetime.today()
@@ -36,6 +37,14 @@ def dispatcher(request):
 
 
 
+def listeHebergeurs(request, hebergeur_id = None):
+    hebergeurs_list = Hebergeur.objects.all()
+    template = loader.get_template('webApplication/listeHebergeurs.html')
+    context={}
+    context['hebergeurs_list'] = hebergeurs_list
 
+    if hebergeur_id != None:
+        hebergeurSelection = get_object_or_404(Hebergeur, idpersonne=hebergeur_id)
+        context['hebergeurSelection'] = hebergeurSelection
 
-
+    return HttpResponse(template.render(context, request))

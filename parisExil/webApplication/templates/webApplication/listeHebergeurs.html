@@ -1,0 +1,95 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+
+	<head>
+	<meta charset="utf-8">
+	<title>Paris Exil</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+	<link href="https://fonts.googleapis.com/css?family=Lobster&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+	<script scr="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+	<link rel="stylesheet" href="{% static 'css/webApplication.css' %}">
+	</head>
+	
+	<body>
+
+		
+		<nav class="navbar navbar-default">
+			<div class="container-fluid">			
+				<!-- Header -->
+				<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#topNavBar"
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+				</button>
+				</div>			
+				<!-- Item -->
+				<div class="collapse navbar-collapse" id="topNavBar">
+					<ul class="nav navbar-nav navbar-left">
+						<li><h1><a href="#">  Paris d'exil  </a></h1></li>
+						<li><h1><a href="#">  Jeunes  </a></h1></li>
+						<li><h1><a href="#">  Hébergeurs  </a></h1></li>
+						<li><h1><a href="#">  Calendrier  </a></h1></li>
+					</ul>
+				</div>
+			</div>
+		</nav>
+	<div class="container">
+	<div class="row">
+		<h2>Liste des hébergeurs</h2>
+		{% if hebergeurs_list %}
+			<table align="left" class="points_table">
+				<h1></h1>
+				<tr>
+					<thead>
+						<th class="col-xs-7">Nom</th> 
+						<th class="col-xs-7">Prénom</th>
+                        <th class="col-xs-7">Nombre total de places</th>
+                        <th class="col-xs-7"><span class="glyphicon glyphicon-user" aria-hidden="true"></span></th>
+					</thead>
+				</tr>
+				<tbody class="points_table_scrollbar">
+				{% for hebergeur in hebergeurs_list %}
+					
+						<tr class="even">
+							<td class="col-xs-7">
+								{{hebergeur.idpersonne.nom}}	
+							</td>
+							<td class="col-xs-7">
+								{{ hebergeur.idpersonne.prenom }}
+							</td>
+							<td class="col-xs-7">{{hebergeur.capaciteaccueil}}</td>
+                            <td class="col-xs-7">
+								<a href="{% url 'listeHebergeurs' hebergeur.idpersonne.idpersonne %}">
+								<span class="glyphicon glyphicon-user" aria-hidden="true"></span></a>&nbsp;&nbsp;
+							</td>
+                        </tr>
+					</tbody>
+					
+	 			{% endfor %}
+			</table>
+		{% else %}
+    		<p>Aucun hébergeur n'a été enregistré</p>
+        {% endif %}
+
+        {% if hebergeurSelection %}
+            <div>
+                <h2>
+                    Profil de l'hébergeur actuellement sélectionné
+                </h2>
+                <div>
+                    <p>Nom: {{hebergeurSelection.idpersonne.nom}}</p>
+                    <p>Prénom: {{hebergeurSelection.idpersonne.prenom}}</p>
+                    <p>Adresse: {{hebergeurSelection.adressepostale}}</p>
+                    <p>Téléphone: {{hebergeurSelection.idpersonne.numtel}}</p>
+                    <p>Commentaires: {{hebergeurSelection.idpersonne.commentaire}}</p>
+                </div>
+            </div>
+        {% endif %}
+	</body>
+	
+		</div>
+</div>
+</html>

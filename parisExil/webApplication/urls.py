@@ -10,4 +10,6 @@ urlpatterns = [
     path('', views.index, name='index'),    
     path('<int:jeune_id>/', views.detailJeune, name='detailJeune'),
     path('dispatch', views.dispatcher, name='dispatch'),
+    path('listeHebergeurs/', views.listeHebergeurs, name='listeHebergeurs'),
+    path('listeHebergeurs/<int:hebergeur_id>/', views.listeHebergeurs, name='listeHebergeurs'),
 ]
