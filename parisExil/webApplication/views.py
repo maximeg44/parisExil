@@ -20,10 +20,10 @@ def index(request):
 
 def detailJeune(request, jeune_id):
     jeune = get_object_or_404(Jeune, pk=jeune_id)
-    liste_langue_parler = Parler.objects.all().filter(idpersonne = jeune_id)
+    liste_langue_parler = Parler.objects.all().filter(idpersonne=jeune_id)
     template = loader.get_template('webApplication/detailJeune.html')
     context = {
-        'jeune' : jeune, 
+        'jeune' : jeune,
         'liste_langue_parler' : liste_langue_parler,
         }
     return HttpResponse(template.render(context, request))
@@ -33,14 +33,14 @@ def dispatcher(request):
     context = {
         
         }
-    return HttpResponse(template.render(context,request))
+    return HttpResponse(template.render(context, request))
 
 
 
-def listeHebergeurs(request, hebergeur_id = None):
+def listeHebergeurs(request, hebergeur_id=None):
     hebergeurs_list = Hebergeur.objects.all()
     template = loader.get_template('webApplication/listeHebergeurs.html')
-    context={}
+    context = {}
     context['hebergeurs_list'] = hebergeurs_list
 
     if hebergeur_id != None:

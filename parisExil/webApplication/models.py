@@ -12,27 +12,27 @@ import datetime
 class Avocat(models.Model):
 
     def get_idavocat(self):
-        return self.__idavocat
+        return self.idavocat
 
 
     def get_nom(self):
-        return self.__nom
+        return self.nom
 
 
     def get_numtel(self):
-        return self.__numtel
+        return self.numtel
 
 
     def set_idavocat(self, value):
-        self.__idavocat = value
+        self.idavocat = value
 
 
     def set_nom(self, value):
-        self.__nom = value
+        self.nom = value
 
 
     def set_numtel(self, value):
-        self.__numtel = value
+        self.numtel = value
     
     def __str__(self):
         return self.nom
@@ -218,9 +218,9 @@ class Jeune(models.Model):
     
     def get_fin_hebergement(self):
         date_fin = Accueillir.objects.order_by('dateFin')[:1].get(pk=self.get_idpersonne())
-        #date_fin = Accueillir.objects.get(pk=self.get_idpersonne())
-        #date_fin = self.idpersonne.nom
-        #date_fin.strftime("%d/%m/%Y")
+        # date_fin = Accueillir.objects.get(pk=self.get_idpersonne())
+        # date_fin = self.idpersonne.nom
+        # date_fin.strftime("%d/%m/%Y")
         return date_fin
         
 
@@ -435,12 +435,12 @@ class Nationalite(models.Model):
 class Personne(models.Model):
     
     def get_fin_hebergement(self):
-        #date_fin = Accueillir.objects.order_by('datefin')[:1]
+        # date_fin = Accueillir.objects.order_by('datefin')[:1]
         date_fin = Accueillir.objects.order_by('datefin').get(pk=self.get_idpersonne())[:1]
-        #date_fin = Accueillir.objects.get(pk=self.get_idpersonne())
+        # date_fin = Accueillir.objects.get(pk=self.get_idpersonne())
         date = date_fin.dateFin
-        #date_fin = Accueillir.objects.all()
-        #date_fin = self.nom
+        # date_fin = Accueillir.objects.all()
+        # date_fin = self.nom
         return date.strftime("%d/%m/%Y")
     
         
@@ -525,7 +525,7 @@ class Accueillir(models.Model):
 
 
     def set_datedebut(self, value):
-        self.__datedebut = value
+        self.datedebut = value
 
 
     def set_datefin(self, value):
@@ -539,7 +539,7 @@ class Accueillir(models.Model):
     datefin = models.DateField(db_column='dateFin', blank=True, null=True)  # Field name made lowercase.
     commentaire = models.CharField(db_column='commentaire', max_length=250, blank=True, null=True)
     adressemail = models.OneToOneField(Hebergeur, models.DO_NOTHING, db_column='adresseMail', primary_key=True)  # Field name made lowercase.
-    idpersonne = models.OneToOneField(Personne, models.DO_NOTHING, related_name='Jeune', db_column='idPersonne') # Field name made lowercase.
+    idpersonne = models.OneToOneField(Personne, models.DO_NOTHING, related_name='Jeune', db_column='idPersonne')  # Field name made lowercase.
     idpersonne_1 = models.OneToOneField(Personne, models.DO_NOTHING, related_name='Hebergeur' , db_column='idPersonne_1')  # Field name made lowercase.
     idpersonne_2 = models.OneToOneField(Personne, models.DO_NOTHING, related_name='Membre', db_column='idPersonne_2')  # Field name made lowercase.
 
@@ -737,7 +737,7 @@ class Mesentente(models.Model):
         return self.idpersonne_1
 
     idpersonne = models.OneToOneField(Personne, models.DO_NOTHING, related_name='UnJeune', db_column='idPersonne', primary_key=True)  # Field name made lowercase.
-    idpersonne_1 = models.OneToOneField(Personne, models.DO_NOTHING,related_name='Un_Jeune', db_column='idPersonne_1')  # Field name made lowercase.
+    idpersonne_1 = models.OneToOneField(Personne, models.DO_NOTHING, related_name='Un_Jeune', db_column='idPersonne_1')  # Field name made lowercase.
 
     class Meta:
         managed = False
