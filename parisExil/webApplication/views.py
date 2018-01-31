@@ -48,3 +48,17 @@ def listeHebergeurs(request, hebergeur_id = None):
         context['hebergeurSelection'] = hebergeurSelection
 
     return HttpResponse(template.render(context, request))
+
+def listeJeunes(request, jeune_id = None):
+    jeunes_list = Jeune.objects.all()
+    jeunes_heberges_list = Accueillir.objects.values_list('idpersonne',flat=True)
+    template = loader.get_template('webApplication/listeJeunes.html')
+    context={}
+    context['jeunes_list'] = jeunes_list
+    context['jeunes_heberges_list'] = jeunes_heberges_list
+
+    if jeune_id != None:
+        jeuneSelection = get_object_or_404(Jeune, idpersonne=jeune_id)
+        context['jeuneSelection'] = jeuneSelection
+
+    return HttpResponse(template.render(context, request))
