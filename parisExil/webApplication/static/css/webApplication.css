@@ -101,3 +101,12 @@ select {
     clear: both;
     float: none;
 }
+
+.scrollBox{
+    width:45%;
+    height:400px;
+    line-height:3em;
+    overflow:scroll;
+    padding:2px;
+    text-align: center;
+}
