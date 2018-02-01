@@ -30,8 +30,12 @@ def detailJeune(request, jeune_id):
 
 def dispatcher(request):
     template = loader.get_template('webApplication/dispatch.html')
+    start_date = datetime.today()
+    delai = timedelta(7)
+    end_date = start_date + delai
+    jeunes_fin_hebergement_list = Accueillir.objects.all().filter(datefin__lte=end_date) 
     context = {
-        
+        'jeunes_fin_hebergement_list' : jeunes_fin_hebergement_list,
         }
     return HttpResponse(template.render(context,request))
 

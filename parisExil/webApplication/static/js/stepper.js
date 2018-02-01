@@ -39,5 +39,21 @@ $(document).ready(function () {
   });
 
   $('div.setup-panel div a.btn-primary').trigger('click');
+
+  $('.input-group.date').datepicker({
+    todayHighlight: true,
+    autoclose: true,
+    format: 'dd/mm/yy'
+});
+
+});
+
+$(document).ready(function() {
+    $('.js-example-basic-single').select2({
+        placeholder: 'Selectionnez',
+        theme: "bootstrap"
+    });
+    
+
 });
 
