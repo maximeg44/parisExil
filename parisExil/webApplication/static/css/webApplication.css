@@ -38,7 +38,15 @@ input.hidden {
     left: -9999px;
 }
 
-
+.footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background-color: #fdd0b1;
+    color: white;
+    text-align: center;
+}
 
 
 .stepwizard-step p {
