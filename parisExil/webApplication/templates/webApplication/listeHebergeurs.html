@@ -1,245 +1,173 @@
-{% extends "webApplication/base.html" %}
-{% load static %}
-{% block content %}
+{% extends "webApplication/base.html" %} {% load static %} {% block content %}
 
 <div class="container">
 
 	<div class="row">
+		<section>
+			<article>
+				<h2>Liste des hébergeurs</h2>
 
-		<h2>Liste des hébergeurs</h2>
+				{% if hebergeurs_list %}
+				<div class="scrollBox">
 
-		{% if hebergeurs_list %}
+					<table align="left" class="points_table">
 
-		<div class="scrollBox">
+						<tr>
+							<thead>
+								<th class="col-xs-7">Nom</th>
+								<th class="col-xs-7">Prénom</th>
+								<th class="col-xs-7">Nombre total de places</th>
+								<th class="col-xs-7">
+									<span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+								</th>
+							</thead>
+						</tr>
 
-			<table align="left" class="points_table">
+						<tbody class="points_table_scrollbar">
 
-				<tr>
-					<thead>
-						<th class="col-xs-7">Nom</th>
-						<th class="col-xs-7">Prénom</th>
-						<th class="col-xs-7">Nombre total de places</th>
-						<th class="col-xs-7">
-							<span class="glyphicon glyphicon-user" aria-hidden="true"></span>
-						</th>
-					</thead>
-				</tr>
+							{% for hebergeur in hebergeurs_list %}
 
-				<tbody class="points_table_scrollbar">
+							<tr class="even">
 
-					{% for hebergeur in hebergeurs_list %}
+								<td class="col-xs-7">
+									
+									{{hebergeur.idpersonne.nom}}
 
-					<tr class="even">
+								</td>
 
-						<td class="col-xs-7">
+								<td class="col-xs-7">
 
-							{{hebergeur.idpersonne.nom}}
+									{{ hebergeur.idpersonne.prenom }}
 
-						</td>
+								</td>
 
-						<td class="col-xs-7">
+								<td class="col-xs-7">
 
-							{{ hebergeur.idpersonne.prenom }}
+									{{hebergeur.capaciteaccueil}}
 
-						</td>
+								</td>
 
-						<td class="col-xs-7">
+								<td class="col-xs-7">
 
-							{{hebergeur.capaciteaccueil}}
+									<a href="{% url 'listeHebergeurs' hebergeur.idpersonne.idpersonne %}">
 
-						</td>
+										<span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+									</a>&nbsp;&nbsp;
 
-						<td class="col-xs-7">
+								</td>
 
-							<a href="{% url 'listeHebergeurs' hebergeur.idpersonne.idpersonne %}">
+							</tr>
 
-								<span class="glyphicon glyphicon-user" aria-hidden="true"></span>
-							</a>&nbsp;&nbsp;
+						</tbody>
 
-						</td>
+						{% endfor %}
 
-					</tr>
+					</table>
 
-				</tbody>
-
-				{% endfor %}
-
-			</table>
-
-		</div>
-		{% endif %}
-		{% if hebergeurSelection %}
-
-		<div class="col-md-10 ">
-
-			<div class="panel panel-default col-md-offset-3">
-
-				<div class="panel-heading">
-					<h4>Profil de la personne</h4>
 				</div>
+				{% endif %}
+			</article>
 
-				<div class="panel-body">
+			<article>
+				{% if hebergeurSelection %}
+				<div>
 
-					<div class="box box-info">
+					<div class="panel panel-default">
 
-						<div class="box-body">
-
-							<div class="col-sm-2">
-
-								<div align="center">
-									<img alt="User Pic" src="https://x1.xingassets.com/assets/frontend_minified/img/users/nobody_m.original.jpg" id="profile-image1"
-									 class="img-circle img-responsive">
-
-									<input id="profile-image-upload" class="hidden" type="file">
-
-								</div>
-
-								<!-- /input-group -->
-
-							</div>
-
-							<div class="col-sm-6">
-
-								<h4 style="color:#00b1b1;"> {{jeune.idpersonne.prenom}} {{jeune.idpersonne.nom}} </h4>
-								</span>
-
-								<span>
-									<p>Jeune</p>
-								</span>
-
-							</div>
-
-							<div class="clearfix"></div>
-
-							<hr style="margin:5px 0 5px 0;">
-
-							<div class="col-sm-5 col-xs-6 tital ">
-								<b>Prénom :</b>
-							</div>
-							<div class="col-sm-7 col-xs-6 ">{{jeune.idpersonne.prenom}}</div>
-
-							<div class="clearfix"></div>
-
-							<div class="bot-border"></div>
-
-							</br>
-
-							<div class="col-sm-5 col-xs-6 tital ">
-								<b>Nom :</b>
-							</div>
-							<div class="col-sm-7"> {{jeune.idpersonne.nom}}</div>
-
-							<div class="clearfix"></div>
-
-							<div class="bot-border"></div>
-
-							</br>
-
-							<div class="col-sm-5 col-xs-6 tital ">
-								<b>Numéro de téléphone :</b>
-							</div>
-							<div class="col-sm-7">{{jeune.idpersonne.numtel}}</div>
-
-							<div class="clearfix"></div>
-
-							<div class="bot-border"></div>
-
-							</br>
-
-							<div class="col-sm-5 col-xs-6 tital ">
-								<b>Date de naissance :</b>
-							</div>
-							<div class="col-sm-7">{{jeune.datenaissance}}</div>
-
-							<div class="clearfix"></div>
-
-							<div class="bot-border"></div>
-
-							</br>
-
-							<div class="col-sm-5 col-xs-6 tital ">
-								<b>Signalé par :</b>
-							</div>
-							<div class="col-sm-7">{{jeune.signalerpar}}</div>
-
-							<div class="clearfix"></div>
-
-							<div class="bot-border"></div>
-
-							</br>
-
-							<div class="col-sm-5 col-xs-6 tital ">
-								<b>Scolarisé à :</b>
-							</div>
-							<div class="col-sm-7">{{jeune.idecole.libelle}}, {{jeune.idecole.ville}}</div>
-
-							<div class="clearfix"></div>
-
-							<div class="bot-border"></div>
-
-							</br>
-
-							<div class="col-sm-5 col-xs-6 tital ">
-								<b>Nationalité :</b>
-							</div>
-							<div class="col-sm-7">{{jeune.pays}}</div>
-
-							<div class="clearfix"></div>
-
-							<div class="bot-border"></div>
-
-							</br>
-
-							<div class="col-sm-5 col-xs-6 tital ">
-								<b>Avocat :</b>
-							</div>
-							<div class="col-sm-7">{{jeune.idavocat.nom}} : {{jeune.idavocat.numtel}}</div>
-
-							<div class="clearfix"></div>
-
-							<div class="bot-border"></div>
-
-							</br>
-
-							<div class="form-group">
-
-								<div class="col-sm-5 col-xs-5 tital ">
-									<b>Langue parlée :</b>
-								</div>
-								<div class="col-sm-7"></div>
-
-								<div class="col-md-8">
-
-									<select id="selectbasic" name="selectbasic" class="form-control">
-
-										{%for langue in liste_langue_parler%}
-
-										<option value="1">{{langue.libelle}}</option>
-
-										{%endfor%}
-
-									</select>
-
-								</div>
-
-							</div>
-
-							<!-- /.box-body -->
-
+						<div class="panel-heading">
+							<h4>Profil de la personne</h4>
 						</div>
 
-						<!-- /.box -->
+						<div class="panel-body">
+
+							<div class="box box-info">
+
+								<div class="box-body">
+
+									<div class="col-sm-2">
+
+										<div align="center">
+											<img alt="User Pic" src="https://x1.xingassets.com/assets/frontend_minified/img/users/nobody_m.original.jpg" id="profile-image1"
+											 class="img-circle img-responsive">
+
+											<input id="profile-image-upload" class="hidden" type="file">
+
+										</div>
+
+										<!-- /input-group -->
+
+									</div>
+
+									<div class="col-sm-6">
+										<h4 style="color:#00b1b1;"> {{hebergeurSelection.idpersonne.prenom}} {{hebergeurSelection.idpersonne.nom}} </h4>
+									</div>
+
+									<div class="clearfix"></div>
+
+									<hr style="margin:5px 0 5px 0;">
+
+									<div class="col-sm-5 col-xs-6 tital ">
+										<b>Numéro de téléphone :</b>
+									</div>
+									<div class="col-sm-7">{{jeune.idpersonne.numtel}}</div>
+
+									<div class="clearfix"></div>
+
+									<div class="bot-border"></div>
+
+									</br>
+
+									<div class="col-sm-5 col-xs-6 tital ">
+										<b>Nationalité :</b>
+									</div>
+									<div class="col-sm-7">{{jeune.pays}}</div>
+
+									<div class="clearfix"></div>
+
+									<div class="bot-border"></div>
+
+									</br>
+
+									<div class="form-group">
+
+										<div class="col-sm-5 col-xs-5 tital ">
+											<b>Langue parlée :</b>
+										</div>
+										<div class="col-sm-7"></div>
+
+										<div class="col-md-8">
+
+											<select id="selectbasic" name="selectbasic" class="form-control">
+
+												{%for langue in liste_langue_parler%}
+
+												<option value="1">{{langue.libelle}}</option>
+
+												{%endfor%}
+
+											</select>
+
+										</div>
+
+									</div>
+
+									<!-- /.box-body -->
+
+								</div>
+
+								<!-- /.box -->
+
+							</div>
+
+						</div>
 
 					</div>
 
 				</div>
 
-			</div>
-
-		</div>
-
-		{% endif %}
-
+				{% endif %}
+			</article>
+		</section>
 	</div>
 
 </div>
