@@ -60,10 +60,8 @@ def listeHebergeurs(request, hebergeur_id=None):
 #Méthode à paramètre facultatif: si un id est donné en paramètre, on cherche le jeune correspondant à cet id pour en afficher le détail du profil
 def listeJeunes(request, jeune_id = None):
     start_date = datetime.today()
-    delai = timedelta(7)
-    end_date = start_date + delai
     jeunes_list = Jeune.objects.all()
-    jeunes_heberges_list = Accueillir.objects.values_list('idpersonne',flat=True).filter(datefin__lte=end_date)
+    jeunes_heberges_list = Accueillir.objects.values_list('idpersonne',flat=True).filter(datefin__gte=start_date)
     template = loader.get_template('webApplication/listeJeunes.html')
     context={}
     context['jeunes_list'] = jeunes_list
