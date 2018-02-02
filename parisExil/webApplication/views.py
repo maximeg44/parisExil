@@ -40,7 +40,9 @@ def dispatcher(request):
     return HttpResponse(template.render(context, request))
 
 
-
+#Méthode associée à la page listeHebergeurs
+#Cette méthode permet de récupérer la totalité des hébergeurs dans la base de données
+#Méthode à paramètre facultatif: si un id est donné en paramètre, on cherche l'hébergeur correspondant à cet id pour en afficher le détail du profil
 def listeHebergeurs(request, hebergeur_id=None):
     hebergeurs_list = Hebergeur.objects.all()
     template = loader.get_template('webApplication/listeHebergeurs.html')
@@ -53,9 +55,13 @@ def listeHebergeurs(request, hebergeur_id=None):
 
     return HttpResponse(template.render(context, request))
 
+#Méthode associée à la page listeJeunes
+#Cette méthode permet de récupérer la totalité des jeunes dans la base de données
+#Méthode à paramètre facultatif: si un id est donné en paramètre, on cherche le jeune correspondant à cet id pour en afficher le détail du profil
 def listeJeunes(request, jeune_id = None):
+    start_date = datetime.today()
     jeunes_list = Jeune.objects.all()
-    jeunes_heberges_list = Accueillir.objects.values_list('idpersonne',flat=True)
+    jeunes_heberges_list = Accueillir.objects.values_list('idpersonne',flat=True).filter(datefin__gte=start_date)
     template = loader.get_template('webApplication/listeJeunes.html')
     context={}
     context['jeunes_list'] = jeunes_list
