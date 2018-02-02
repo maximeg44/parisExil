@@ -1,66 +1,186 @@
-{% extends "webApplication/base.html" %}
-{% load static %}
+{% extends "webApplication/base.html" %} {% load static %} {% block content %}
 
-{% block content %}
-	<div class="container">
+<div class="container">
+
 	<div class="row">
-		<h2>Liste des jeunes</h2>
-		{% if jeunes_list %}
-			<table align="left" class="points_table">
-				<h1></h1>
-				<tr>
-					<thead>
-						<th class="col-xs-7">Nom</th> 
-						<th class="col-xs-7">Prénom</th>
-                        <th class="col-xs-7">Hébergé</th>
-                        <th class="col-xs-7"><span class="glyphicon glyphicon-user" aria-hidden="true"></span></th>
-					</thead>
-				</tr>
-				<tbody class="points_table_scrollbar">
-				{% for jeune in jeunes_list %}
-					
-						<tr class="even">
-							<td class="col-xs-7">
-								{{jeune.idpersonne.nom}}	
-							</td>
-							<td class="col-xs-7">
-								{{ jeune.idpersonne.prenom }}
-							</td>
-							{% if jeune.idpersonne.idpersonne in jeunes_heberges_list %}
-								<td class="col-xs-7" bgcolor="#22cc22"/>
-							{% else %}
-								<td class="col-xs-7" bgcolor="#ff0000"/>
-							{% endif %}
-                            <td class="col-xs-7">
-								<a href="{% url 'listeJeunes' jeune.idpersonne.idpersonne %}">
-								<span class="glyphicon glyphicon-user" aria-hidden="true"></span></a>&nbsp;&nbsp;
-							</td>
-                        </tr>
-					</tbody>
-					
-	 			{% endfor %}
-			</table>
-		{% else %}
-    		<p>Aucun jeune n'a été enregistré</p>
-        {% endif %}
+		<section>
+			<article>
 
-        {% if jeuneSelection %}
-            <div>
-                <h2>
-                    Profil du jeune actuellement sélectionné
-                </h2>
-                <div>
-                    <p>Nom: {{jeuneSelection.idpersonne.nom}}</p>
-                    <p>Prénom: {{jeuneSelection.idpersonne.prenom}}</p>
-                    <p>Date de naissance: {{jeuneSelection.datenaissance}}</p>
-                    <p>Suivi par: {{jeuneSelection.suivipar}}</p>
-                    <p>Commentaires: {{jeuneSelection.idpersonne.commentaire}}</p>
-                </div>
-            </div>
-        {% endif %}
-	</body>
+				{% if jeunes_list %}
+				<div class="scrollBox">
+					<table id="acrylic">
+						<thead>
+							<tr>
+								<th>Nom</th>
+								<th>Prénom</th>
+								<th>Hébergé</th>
+							</tr>
+						</thead>
+						<tbody>
+						{% for jeune in jeunes_list %}
+							<tr onclick="document.location='{% url 'listeJeunes' jeune.idpersonne.idpersonne %}'">
+								<td>{{jeune.idpersonne.nom}}</td>
+								<td>{{jeune.idpersonne.prenom}}</td>
+								{% if jeune.idpersonne.idpersonne in jeunes_heberges_list %}
+									<td class="col-xs-7" bgcolor="#22cc22"/>
+								{% else %}
+									<td class="col-xs-7" bgcolor="#ff0000"/>
+								{% endif %}
+							</tr>
+						{% endfor %}
+						</tbody>
+					</table>
+				</div>
+				{% endif %}
+			</article>
+
+			<article>
+				{% if jeuneSelection %}
+				<div>
+
+					<div class="panel panel-default">
+
+						<div class="panel-heading">
+							<h4>Profil de la personne</h4>
+						</div>
+
+						<div class="panel-body">
+
+							<div class="box box-info">
+
+								<div class="box-body">
+
+									<div class="col-sm-2">
+
+										<div align="center">
+											<img alt="User Pic" src="https://x1.xingassets.com/assets/frontend_minified/img/users/nobody_m.original.jpg" id="profile-image1"
+											 class="img-circle img-responsive">
+
+											<input id="profile-image-upload" class="hidden" type="file">
+
+										</div>
+
+										<!-- /input-group -->
+
+									</div>
+
+									<div class="col-sm-6">
+										<h4 style="color:#00b1b1;"> {{jeuneSelection.idpersonne.prenom}} {{jeuneSelection.idpersonne.nom}} </h4>
+									</div>
+
+									<div class="clearfix"></div>
+
+									<hr style="margin:5px 0 5px 0;">
+
+									<div class="col-sm-5 col-xs-6 tital ">
+										<b>Date de naissance :</b>
+									</div>
+									<div class="col-sm-7">{{jeuneSelection.datenaissance}}</div>
 	
-		</div>
+									<div class="clearfix"></div>
+	
+									<div class="bot-border"></div>
+	
+									</br>
+
+									<div class="col-sm-5 col-xs-6 tital ">
+										<b>Numéro de téléphone :</b>
+									</div>
+									<div class="col-sm-7">{{jeuneSelection.idpersonne.numtel}}</div>
+
+									<div class="clearfix"></div>
+
+									<div class="bot-border"></div>
+
+									</br>
+
+									<div class="col-sm-5 col-xs-6 tital ">
+										<b>Nationalité :</b>
+									</div>
+									<div class="col-sm-7">{{jeune.pays}}</div>
+
+									<div class="clearfix"></div>
+
+									<div class="bot-border"></div>
+
+									</br>
+
+									<div class="form-group">
+
+										<div class="col-sm-5 col-xs-5 tital ">
+											<b>Langue parlée :</b>
+										</div>
+										<div class="col-sm-7"></div>
+
+										<div class="col-md-8">
+
+											<select id="selectbasic" name="selectbasic" class="form-control">
+
+												{%for langue in liste_langue_parler%}
+
+												<option value="1">{{langue.libelle}}</option>
+
+												{%endfor%}
+
+											</select>
+
+										</div>
+
+									</div>
+
+									</br>
+
+									<div class="col-sm-5 col-xs-6 tital ">
+										<b>Date de prise en charge :</b>
+									</div>
+									<div class="col-sm-7">{{jeuneSelection.datepriseencharge}}</div>
+		
+									<div class="clearfix"></div>
+		
+									<div class="bot-border"></div>
+		
+									</br>
+
+									<div class="col-sm-5 col-xs-6 tital ">
+										<b>Suivi par une association :</b>
+									</div>
+									<div class="col-sm-7">{% if jeuneSelection.suivipar is not NULL%}Oui{% else %}Non{% endif %}</div>
+			
+									<div class="clearfix"></div>
+		
+									<div class="bot-border"></div>
+									</br>
+
+									<div class="col-sm-5 col-xs-6 tital ">
+										<b>Commentaires :</b>
+									</div>
+									<div class="col-sm-7">{{jeuneSelection.idpersonne.commentaire}}</div>
+			
+									<div class="clearfix"></div>
+			
+									<div class="bot-border"></div>
+			
+									</br>
+
+									<!-- /.box-body -->
+
+								</div>
+
+								<!-- /.box -->
+
+							</div>
+
+						</div>
+
+					</div>
+
+				</div>
+
+				{% endif %}
+			</article>
+		</section>
+	</div>
+
 </div>
 
 {% endblock %}

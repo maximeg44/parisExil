@@ -5,65 +5,27 @@
 	<div class="row">
 		<section>
 			<article>
-				<h2>Liste des hébergeurs</h2>
 
 				{% if hebergeurs_list %}
 				<div class="scrollBox">
-
-					<table align="left" class="points_table">
-
-						<tr>
-							<thead>
-								<th class="col-xs-7">Nom</th>
-								<th class="col-xs-7">Prénom</th>
-								<th class="col-xs-7">Nombre total de places</th>
-								<th class="col-xs-7">
-									<span class="glyphicon glyphicon-user" aria-hidden="true"></span>
-								</th>
-							</thead>
-						</tr>
-
-						<tbody class="points_table_scrollbar">
-
-							{% for hebergeur in hebergeurs_list %}
-
-							<tr class="even">
-
-								<td class="col-xs-7">
-									
-									{{hebergeur.idpersonne.nom}}
-
-								</td>
-
-								<td class="col-xs-7">
-
-									{{ hebergeur.idpersonne.prenom }}
-
-								</td>
-
-								<td class="col-xs-7">
-
-									{{hebergeur.capaciteaccueil}}
-
-								</td>
-
-								<td class="col-xs-7">
-
-									<a href="{% url 'listeHebergeurs' hebergeur.idpersonne.idpersonne %}">
-
-										<span class="glyphicon glyphicon-user" aria-hidden="true"></span>
-									</a>&nbsp;&nbsp;
-
-								</td>
-
+					<table id="acrylic">
+						<thead>
+							<tr>
+								<th>Nom</th>
+								<th>Prénom</th>
+								<th>Capacité totale d'accueil</th>
 							</tr>
-
-						</tbody>
-
+						</thead>
+						<tbody>
+						{% for hebergeur in hebergeurs_list %}
+							<tr onclick="document.location='{% url 'listeHebergeurs' hebergeur.idpersonne.idpersonne %}'">
+								<td>{{hebergeur.idpersonne.nom}}</td>
+								<td>{{hebergeur.idpersonne.prenom}}</td>
+								<td>{{hebergeur.capaciteaccueil}}</td>
+							</tr>
 						{% endfor %}
-
+						</tbody>
 					</table>
-
 				</div>
 				{% endif %}
 			</article>
@@ -107,9 +69,20 @@
 									<hr style="margin:5px 0 5px 0;">
 
 									<div class="col-sm-5 col-xs-6 tital ">
+										<b>Adresse :</b>
+									</div>
+									<div class="col-sm-7">{{hebergeurSelection.adressepostale}}</div>
+	
+									<div class="clearfix"></div>
+	
+									<div class="bot-border"></div>
+	
+									</br>
+
+									<div class="col-sm-5 col-xs-6 tital ">
 										<b>Numéro de téléphone :</b>
 									</div>
-									<div class="col-sm-7">{{jeune.idpersonne.numtel}}</div>
+									<div class="col-sm-7">{{hebergeurSelection.idpersonne.numtel}}</div>
 
 									<div class="clearfix"></div>
 
@@ -118,9 +91,9 @@
 									</br>
 
 									<div class="col-sm-5 col-xs-6 tital ">
-										<b>Nationalité :</b>
+										<b>Mail :</b>
 									</div>
-									<div class="col-sm-7">{{jeune.pays}}</div>
+									<div class="col-sm-7">{{hebergeurSelection.adressemail}}</div>
 
 									<div class="clearfix"></div>
 
@@ -128,43 +101,69 @@
 
 									</br>
 
-									<div class="form-group">
+									<div class="col-sm-5 col-xs-6 tital ">
+										<b>Possède un compte Facebook :</b>
+									</div>
+									<div class="col-sm-7">{% if hebergeurSelection.facebook is not NULL%}Oui{% else %}Non{% endif %}</div>
+	
+									<div class="clearfix"></div>
+	
+									<div class="bot-border"></div>
+	
+									</br>
 
-										<div class="col-sm-5 col-xs-5 tital ">
-											<b>Langue parlée :</b>
-										</div>
-										<div class="col-sm-7"></div>
+									<div class="col-sm-5 col-xs-6 tital ">
+										<b>A signé la charte Paris d'Exil :</b>
+									</div>
+									<div class="col-sm-7">{% if hebergeurSelection.signaturecharte == 1%}Oui{% else %}Non{% endif %}</div>
+		
+									<div class="clearfix"></div>
+		
+									<div class="bot-border"></div>
+		
+									</br>
 
-										<div class="col-md-8">
+									<div class="col-sm-5 col-xs-6 tital ">
+										<b>Capacité totale :</b>
+									</div>
+									<div class="col-sm-7">{{hebergeurSelection.capaciteaccueil}}</div>
+	
+									<div class="clearfix"></div>
+	
+									<div class="bot-border"></div>
+	
+									</br>
+									
+									<div class="col-sm-5 col-xs-6 tital ">
+										<b>Nombre lits simple :</b>
+									</div>
+									<div class="col-sm-7">{{hebergeurSelection.nblitsimple}}</div>
+	
+									<div class="clearfix"></div>
+	
+									<div class="bot-border"></div>
+	
+									</br>
 
-											<select id="selectbasic" name="selectbasic" class="form-control">
-
-												{%for langue in liste_langue_parler%}
-
-												<option value="1">{{langue.libelle}}</option>
-
-												{%endfor%}
-
-											</select>
-
-										</div>
+									<div class="col-sm-5 col-xs-6 tital ">
+										<b>Nombre lits double :</b>
+									</div>
+									<div class="col-sm-7">{{hebergeurSelection.nblitdouble}}</div>
+		
+									<div class="clearfix"></div>
+		
+									<div class="bot-border"></div>
+		
+									</br>
 
 									</div>
-
 									<!-- /.box-body -->
-
 								</div>
-
 								<!-- /.box -->
-
 							</div>
-
 						</div>
-
 					</div>
-
 				</div>
-
 				{% endif %}
 			</article>
 		</section>

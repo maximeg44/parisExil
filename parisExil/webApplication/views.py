@@ -69,6 +69,8 @@ def listeJeunes(request, jeune_id = None):
 
     if jeune_id != None:
         jeuneSelection = get_object_or_404(Jeune, idpersonne=jeune_id)
+        liste_langue_parler = Parler.objects.all().filter(idpersonne=jeune_id)
         context['jeuneSelection'] = jeuneSelection
+        context['liste_langue_parler'] = liste_langue_parler
 
     return HttpResponse(template.render(context, request))
