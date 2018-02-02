@@ -75,3 +75,8 @@ def listeJeunes(request, jeune_id = None):
         context['jeuneSelection'] = jeuneSelection
 
     return HttpResponse(template.render(context, request))
+
+def connexion(request):
+    template = loader.get_template('webApplication/connexion.html')
+    context = {}
+    return HttpResponse(template.render(context, request))

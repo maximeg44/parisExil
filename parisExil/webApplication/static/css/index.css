@@ -1,15 +1,13 @@
 @import url(http://fonts.googleapis.com/css?family=Roboto);
 /* Général  */
 
-
-
 /* FIN GENERAL */ 
 
 /* Page index */
 #index { 
   margin:0;
   padding:0;
-  background: url(image/OKL5OX0.jpg) no-repeat center fixed; 
+  background: url("../img/OKL5OX0.jpg") no-repeat center fixed; 
   -webkit-background-size: cover;
   background-size: cover; 
   font-family:Roboto;
@@ -24,6 +22,7 @@ input[type=text], input[type=password] {
     border: solid #fffff;
     box-sizing: border-box;
 }
+
 label{
 	cursor: pointer;
 }
