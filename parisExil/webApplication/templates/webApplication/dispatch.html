@@ -20,6 +20,8 @@
 		
 		<div class="container">
   
+			<!-- Mise en place du stepper -->
+
 			<div class="stepwizard col-md-offset-3">
 				<div class="stepwizard-row setup-panel">
 				  <div class="stepwizard-step">
@@ -37,7 +39,10 @@
 				</div>
 			  </div>
 			  
-			  <form role="form" action="" method="post">
+			<form role="form" action="" method="post">
+
+				<!-- Etape 1 pour choisir la période d'hébergement -->
+
 				<div class="row setup-content" id="step-1">
 				  <div class="col-xs-6 col-md-offset-3">
 					<div class="col-md-12">
@@ -45,23 +50,26 @@
 					  <div class="form-group">
 						<label class="control-label">Du</label>
 						<div class="input-group date">
-								<input type="text" required="required" class="form-control"><span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+							<input type="text" required="required" class="form-control"><span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
 						</div>
 
 						<br />
 
 						<label class="control-label">Au</label>
 						<div class="input-group date">
-								<input type="text" required="required" class="form-control"><span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+							<input type="text" required="required" class="form-control"><span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
 						</div>
+					</div>
 
-					  </div>
+						<!-- Bouton Next pour avancer à l'étape suivante -->
+
 					  <button class="btn btn-primary nextBtn btn-lg pull-right" type="button" >Next</button>
 					</div>
 				  </div>
 				</div>
-			</form>
+			
 
+			<!-- Etape 2 pour choisir le jeune à héberger ainsi que son hébergeur -->
 
 				<div class="row setup-content" id="step-2">
 				  <div class="col-xs-6 col-md-offset-3">
@@ -73,7 +81,7 @@
 							<select class="js-example-basic-single" style="width: 525px">
 								<option></option>
 								{% for jeune in jeunes_fin_hebergement_list %}
-								<option>{{ jeune.idpersonne.nom }} {{jeune.idpersonne.prenom}}</option>
+								<option value="{{ jeune.idpersonne.idpersonne }}"> {{ jeune.idpersonne.nom }} {{jeune.idpersonne.prenom}} - fin d'hébergement le {{jeune.datefin}}</option>
 								{% endfor %}
 							</select>
 						</div>
@@ -82,27 +90,42 @@
 						<div class="input-group">
 							<select class="js-example-basic-single" style="width: 525px">
 								<option></option>
-								<option>Bridgeport</option>
+								{% for hebergeur in hebergeurs_list %}
+								<option value="{{ hebergeur.idpersonne.idpersonne }}">{{ hebergeur.idpersonne.nom }} {{hebergeur.idpersonne.prenom}}</option>
+								{% endfor %}
 							</select>
 						</div>
 					</div>
+
+					<!-- Bouton Next pour avancer à l'étape suivante -->
+
 					  <button class="btn btn-primary nextBtn btn-lg pull-right" type="button" >Next</button>
 					</div>
 				  </div>
 				</div>
 
+				<!-- Etape 3 pour valider le dispatch choisi -->
+
 				<div class="row setup-content" id="step-3">
 					<div class="col-xs-6 col-md-offset-3">
 					  <div class="col-md-12">
-						<h3> Valider </h3>
+						<h3> Valider le dispatch</h3>
 						<div class="form-group">
-						  <label class="control-label">Company Name</label>
+						  <label class="control-label">Jeune à Héberger</label>
+							<br />
+						  <label class="control-label">Hébergeur</label>
+						    <br />
+						  <label class="control-label">Date de l'hébergement</label>
 						</div>
 						</div>
-						<button class="btn btn-primary nextBtn btn-lg pull-right" type="button" >Next</button>
+
+						<!-- Bouton pour confirmer le dispatch choisi -->
+						<button class="btn btn-primary nextBtn btn-lg pull-right" type="button" >Validers</button>
 					  </div>
 					</div>
 				  </div>
+
+			</form>
 			  
 			</div>
 

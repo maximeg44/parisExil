@@ -1,0 +1,151 @@
+@import url(http://fonts.googleapis.com/css?family=Roboto);
+/* Général  */
+
+/* FIN GENERAL */ 
+
+/* Page index */
+#index { 
+  margin:0;
+  padding:0;
+  background: url("../img/OKL5OX0.jpg") no-repeat center fixed; 
+  -webkit-background-size: cover;
+  background-size: cover; 
+  font-family:Roboto;
+}
+
+
+input[type=text], input[type=password] {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: solid #fffff;
+    box-sizing: border-box;
+}
+
+label{
+	cursor: pointer;
+}
+
+button {
+    background-color: #4d0000;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+}
+
+button:hover {
+    opacity: 0.8;
+}
+
+.cancelbtn {
+    width: auto;
+    padding: 10px 18px;
+    background-color: #4d0000;
+}
+
+.imgcontainer {
+    text-align: center;
+}
+
+.container {
+    padding: 16px;
+	width:99%
+}
+
+span.psw {
+    float: right;
+    padding-top: 16px;
+}
+
+@media screen and (max-width: 300px) {
+    span.psw {
+        display: block;
+        float: none;
+    }
+    .cancelbtn {
+        width: 100%;
+    }
+}
+
+.modal {
+    display: none; 
+    position: fixed; 
+    z-index: 1; 
+    left: 0;
+    top: 0;
+    width: 100%; 
+    height: 100%; 
+    overflow: auto; 
+    background-color: rgb(0,0,0); 
+    background-color: rgba(0,0,0,0.4); 
+    padding: 2%;
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 5px auto; 
+    border: 1px solid #888;
+    width: 62%; 
+}
+
+.close {
+    position: absolute;
+    right: 25px;
+    top: 0; 
+    color: #000;
+    font-size: 35px;
+    font-weight: bold;
+}
+
+
+.close:hover,
+.close:focus {
+    color: red;
+    cursor: pointer;
+}
+
+.animate {
+    -webkit-animation: animatezoom 0.6s;
+    animation: animatezoom 0.6s
+}
+
+@-webkit-keyframes animatezoom {
+    from {-webkit-transform: scale(0)} 
+    to {-webkit-transform: scale(1)}
+}
+
+@keyframes animatezoom {
+    from {transform: scale(0)} 
+    to {transform: scale(1)}
+}
+ /* FIN PAGE INDEX */
+
+/* NAVBAR */
+
+.navbar-default {
+    background-color: #4d0000;
+}
+
+.nav.navbar-nav.navbar-left li a {
+    color: white;
+    font-family: 'Lobster';
+    padding: 50px 50px;
+    font-size: .9em;
+    line-height: 5px;
+    height: 10px;
+    text-align: center;
+}
+
+li {
+    list-style-type:none;
+}
+
+.page-header h1, .page-header h1 a, .page-header h1 a:visited, .page-header h1 a:active {
+    color: #ffffff;
+    font-size: 30pt;
+    text-decoration: none;
+}

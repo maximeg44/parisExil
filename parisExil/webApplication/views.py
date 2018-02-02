@@ -28,14 +28,19 @@ def detailJeune(request, jeune_id):
         }
     return HttpResponse(template.render(context, request))
 
+#Méthode associée à la page de dispatch
+#Elle permet de récupérer la liste des hébergeurs et des jeunes afin de mettre en place le dispatch
 def dispatcher(request):
     template = loader.get_template('webApplication/dispatch.html')
     start_date = datetime.today()
     delai = timedelta(7)
     end_date = start_date + delai
     jeunes_fin_hebergement_list = Accueillir.objects.all().filter(datefin__lte=end_date) 
+    hebergeurs_list = Hebergeur.objects.all()    
     context = {
         'jeunes_fin_hebergement_list' : jeunes_fin_hebergement_list,
+        'hebergeurs_list' : hebergeurs_list,
+        'today' : start_date
         }
     return HttpResponse(template.render(context, request))
 
@@ -73,4 +78,10 @@ def listeJeunes(request, jeune_id = None):
         context['jeuneSelection'] = jeuneSelection
         context['liste_langue_parler'] = liste_langue_parler
 
+    return HttpResponse(template.render(context, request))
+
+#Méthode associée à la page de connexion
+def connexion(request):
+    template = loader.get_template('webApplication/connexion.html')
+    context = {}
     return HttpResponse(template.render(context, request))
