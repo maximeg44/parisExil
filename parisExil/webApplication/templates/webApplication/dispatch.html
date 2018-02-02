@@ -20,6 +20,8 @@
 		
 		<div class="container">
   
+			<!-- Mise en place du stepper -->
+
 			<div class="stepwizard col-md-offset-3">
 				<div class="stepwizard-row setup-panel">
 				  <div class="stepwizard-step">
@@ -37,7 +39,10 @@
 				</div>
 			  </div>
 			  
-			  <form role="form" action="" method="post">
+			<form role="form" action="" method="post">
+
+				<!-- Etape 1 pour choisir la période d'hébergement -->
+
 				<div class="row setup-content" id="step-1">
 				  <div class="col-xs-6 col-md-offset-3">
 					<div class="col-md-12">
@@ -54,14 +59,17 @@
 						<div class="input-group date">
 							<input type="text" required="required" class="form-control"><span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
 						</div>
+					</div>
 
-					  </div>
+						<!-- Bouton Next pour avancer à l'étape suivante -->
+
 					  <button class="btn btn-primary nextBtn btn-lg pull-right" type="button" >Next</button>
 					</div>
 				  </div>
 				</div>
-			</form>
+			
 
+			<!-- Etape 2 pour choisir le jeune à héberger ainsi que son hébergeur -->
 
 				<div class="row setup-content" id="step-2">
 				  <div class="col-xs-6 col-md-offset-3">
@@ -88,10 +96,15 @@
 							</select>
 						</div>
 					</div>
+
+					<!-- Bouton Next pour avancer à l'étape suivante -->
+
 					  <button class="btn btn-primary nextBtn btn-lg pull-right" type="button" >Next</button>
 					</div>
 				  </div>
 				</div>
+
+				<!-- Etape 3 pour valider le dispatch choisi -->
 
 				<div class="row setup-content" id="step-3">
 					<div class="col-xs-6 col-md-offset-3">
@@ -105,10 +118,14 @@
 						  <label class="control-label">Date de l'hébergement</label>
 						</div>
 						</div>
-						<button class="btn btn-primary nextBtn btn-lg pull-right" type="button" >Next</button>
+
+						<!-- Bouton pour confirmer le dispatch choisi -->
+						<button class="btn btn-primary nextBtn btn-lg pull-right" type="button" >Validers</button>
 					  </div>
 					</div>
 				  </div>
+
+			</form>
 			  
 			</div>
 

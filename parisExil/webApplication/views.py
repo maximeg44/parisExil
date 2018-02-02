@@ -28,6 +28,8 @@ def detailJeune(request, jeune_id):
         }
     return HttpResponse(template.render(context, request))
 
+#Méthode associée à la page de dispatch
+#Elle permet de récupérer la liste des hébergeurs et des jeunes afin de mettre en place le dispatch
 def dispatcher(request):
     template = loader.get_template('webApplication/dispatch.html')
     start_date = datetime.today()
@@ -76,6 +78,7 @@ def listeJeunes(request, jeune_id = None):
 
     return HttpResponse(template.render(context, request))
 
+#Méthode associée à la page de connexion
 def connexion(request):
     template = loader.get_template('webApplication/connexion.html')
     context = {}
