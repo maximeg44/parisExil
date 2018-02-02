@@ -34,8 +34,11 @@ def dispatcher(request):
     delai = timedelta(7)
     end_date = start_date + delai
     jeunes_fin_hebergement_list = Accueillir.objects.all().filter(datefin__lte=end_date) 
+    hebergeurs_list = Hebergeur.objects.all()    
     context = {
         'jeunes_fin_hebergement_list' : jeunes_fin_hebergement_list,
+        'hebergeurs_list' : hebergeurs_list,
+        'today' : start_date
         }
     return HttpResponse(template.render(context, request))
 
