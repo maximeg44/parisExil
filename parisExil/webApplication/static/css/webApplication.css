@@ -197,6 +197,7 @@ article{
     font-size: 13px;
     padding: 20px 20px 20px 20px;
     border-bottom: 1px solid #e0e0e0;
+    text-align: center;
 }
 
 #acrylic tbody tr:nth-child(2n) {
