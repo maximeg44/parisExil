@@ -1,6 +1,6 @@
 {% extends "webApplication/base.html" %} {% load static %} {% block content %}
 
-<div class="container">
+<div class="container" style="min-height:400px">
 
 	<div class="row">
 		<section>
@@ -22,9 +22,9 @@
 								<td>{{jeune.idpersonne.nom}}</td>
 								<td>{{jeune.idpersonne.prenom}}</td>
 								{% if jeune.idpersonne.idpersonne in jeunes_heberges_list %}
-									<td class="col-xs-7" bgcolor="#22cc22"/>
+									<td class="col-xs-3"/><i class="fa fa-check-circle" style="font-size:20px;color:green"></i>
 								{% else %}
-									<td class="col-xs-7" bgcolor="#ff0000"/>
+									<td class="col-xs-3"/><i class="fa fa-times-circle" style="font-size:20px;color:red"></i>
 								{% endif %}
 							</tr>
 						{% endfor %}
@@ -34,6 +34,7 @@
 				{% endif %}
 			</article>
 
+			&nbsp;&nbsp;
 			<article>
 				{% if jeuneSelection %}
 				<div>
@@ -97,7 +98,7 @@
 									<div class="col-sm-5 col-xs-6 tital ">
 										<b>Nationalité :</b>
 									</div>
-									<div class="col-sm-7">{{jeune.pays}}</div>
+									<div class="col-sm-7">{{jeuneSelection.pays}}</div>
 
 									<div class="clearfix"></div>
 
@@ -107,7 +108,7 @@
 
 									<div class="form-group">
 
-										<div class="col-sm-5 col-xs-5 tital ">
+										<div class="col-sm-3 col-xs-3 tital ">
 											<b>Langue parlée :</b>
 										</div>
 										<div class="col-sm-7"></div>
@@ -128,7 +129,7 @@
 
 									</div>
 
-									</br>
+									</br></br>
 
 									<div class="col-sm-5 col-xs-6 tital ">
 										<b>Date de prise en charge :</b>
