@@ -1,4 +1,8 @@
 /* GENERAL */
+html{
+  position: relative;
+  min-height: 100%;
+}
 
 h1 a {
     color: #D19275;
@@ -10,7 +14,8 @@ h2{
 }
 
 body {
-    background-color:#ffddcc;
+    background-color:#ffbb99;
+	margin-bottom: 60px;
 }
 
 section{
@@ -29,10 +34,6 @@ select {
     position: relative;
     clear: both;
     float: none;
-}
-
-.container{
-	position:relative;
 }
 
 /* FIN GENERAL */ 
@@ -94,14 +95,14 @@ input.hidden {
 /* FOOTER */
 
 .footer {
-    width: 100%;
-    background-color: #4d0000;
-    color: white;
+	position: fixed;
+	left: 0;
 	bottom: 0;
-	position:absolute;
+	width: 100%;
+	background-image:linear-gradient(#ffbb99, #fec962);
+	color: white;
 	text-align: center;
-	clear:both;
-}
+}	
 
 /* DISPATCH */
 
