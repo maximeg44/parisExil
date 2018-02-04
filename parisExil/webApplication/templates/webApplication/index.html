@@ -1,34 +1,42 @@
-{% extends "webApplication/base.html" %} {% load static %} {% block content %}
-
-<div class="container" style="min-height:400px">
+{% extends "webApplication/base.html" %}
+{% load static %}
+	
+{% block content %}
+	<div class="container" style="min-height:400px">
 	<div class="row">
 		<h2>Jeunes sans hébergement dans les 7 jours</h2>
 		
-		<br />
-		{% if jeunes_fin_hebergement_list %}
-		<table id="acrylic">
-			<thead>
-				<tr>
-					<th>Nom</th>
-					<th>Prenom</th>
-					<th>date de fin d'hébergement</th>
-				</tr>
-			</thead>
-			<tbody>
-				{% for jeune in jeunes_fin_hebergement_list %}
-				<tr onclick="document.location='{% url 'listeJeunes' jeune.idpersonne.idpersonne %}'">					<td>{{jeune.idpersonne.nom}}</td>
-					<td>{{jeune.idpersonne.prenom}}</td>
-					<td>{{jeune.datefin}}</td>
-				</tr>
-				{% endfor %}
-			</tbody>
-		</table>
+		<div class="container">
+			  
+				<br />
+				{% if jeunes_fin_hebergement_list %}
+				<table id="acrylic">
+					<thead>
+						<tr>
+							<th>Nom</th>
+							<th>Prenom</th>
+							<th>date de fin d'hébergement</th>
+						</tr>
+					</thead>
+					<tbody>
+						{% for jeune in jeunes_fin_hebergement_list %}
+						<tr onclick="document.location='{% url 'listeJeunes' jeune.idpersonne.idpersonne %}'">					<td>{{jeune.idpersonne.nom}}</td>
+							<td>{{jeune.idpersonne.prenom}}</td>
+							<td>{{jeune.datefin}}</td>
+						</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+		
+				{% else %}
+				<p>Il n'y a pas de jeune dont l'hébergement prend fin dans les 7 jours.</p>
+				{% endif %}
 
-		{% else %}
-		<p>Il n'y a pas de jeune dont l'hébergement prend fin dans les 7 jours.</p>
-		{% endif %}
+		</div>
+
+			
 
 	</div>
-</div>
+	</div>
 
 {% endblock %}

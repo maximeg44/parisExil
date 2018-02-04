@@ -12,6 +12,19 @@
 			<article>
 
 				{% if jeunes_list %}
+
+					<div id="custom-search-input">
+						<div class="input-group col-md-12">
+								<input type="text" id="searchBar" class="form-control" onkeyup="searchByName()" placeholder="Filtrer les jeunes..." />
+								<span class="input-group-btn">
+									<button class="btn btn-info" type="button">
+										<i class="glyphicon glyphicon-search"></i>
+									</button>
+								</span>
+						</div>
+					</div>
+					
+				<br />
 				<div class="scrollBox">
 					<table id="acrylic">
 						<thead>
@@ -36,7 +49,7 @@
 						</tbody>
 					</table>
 				</div>
-				<input type="text" id="searchBar" onkeyup="searchByName()" placeholder="Filtrer les jeunes...">
+				
 				{% endif %}
 			</article>
 
