@@ -124,30 +124,3 @@ span.psw {
 }
  /* FIN PAGE INDEX */
 
-/* NAVBAR */
-
-.navbar-default {
-    background-color: #4d0000;
-	margin:0;
-	border:0;
-}
-
-.nav.navbar-nav.navbar-left li a {
-    color: white;
-    font-family: 'Lobster';
-    padding: 50px 50px;
-    font-size: .9em;
-    line-height: 5px;
-    height: 10px;
-    text-align: center;
-}
-
-li {
-    list-style-type:none;
-}
-
-.page-header h1, .page-header h1 a, .page-header h1 a:visited, .page-header h1 a:active {
-    color: #ffffff;
-    font-size: 30pt;
-    text-decoration: none;
-}

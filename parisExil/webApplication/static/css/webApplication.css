@@ -7,6 +7,16 @@ body {
     background-color:#ffddcc;
 }
 
+
+
+/* NAVBAR */
+
+.navbar-default {
+    background-color: #4d0000;
+    border:0;
+    margin:0;
+}
+
 li {
     list-style-type:none;
 }
@@ -17,28 +27,32 @@ li {
     text-decoration: none;
 }
 
-
-.navbar-default {
-    background-color: #4d0000;
-    border:0;
-    margin:0;
-}
-
 .nav.navbar-nav.navbar-left li a {
     color: white;
     font-family: 'Lobster';
-    padding: 0 50px;
     font-size: .9em;
     line-height: 5px;
     height: 10px;
     text-align: center;
-    
+}
+
+.nav.navbar-nav.navbar-left li{
+	width:25%;
+	text-align:center;
+}
+
+.nav.navbar-nav.navbar-left{
+	width:100%
 }
 
 input.hidden {
     position: absolute;
     left: -9999px;
 }
+
+/* FIN NAVBAR */
+
+/* FOOTER */
 
 .footer {
     position: relative;
