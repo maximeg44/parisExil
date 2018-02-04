@@ -24,10 +24,11 @@
 				<!-- Item -->
 				<div class="collapse navbar-collapse" id="topNavBar">					
 					<ul class="nav navbar-nav navbar-left">
-						<li><h1><a href="{% url 'index' %}">  Paris d'exil  </a></h1></li>
+						<li><h1><a href="{% url 'index' %}" >  Accueil  </a></h1></li>
 						<li><h1><a href="{% url 'listeJeunes' %}">  Jeunes  </a></h1></li>
 						<li><h1><a href="{% url 'listeHebergeurs' %}">  Hébergeurs  </a></h1></li>
 						<li><h1><a href="{% url 'dispatch' %}">  Dispatch  </a></h1></li>
+						<li><h1><a href="{% url 'connexion' %}">  Déconnexion <i class="fa fa-sign-out"></i>  </a></h1></li>
 					</ul>
 				</div>			
 				<!-- Header -->
@@ -47,17 +48,14 @@
         {% endblock %}
 
 	<footer class="footer">
-      	<div class="container">
       		<div class="text-center center-block">
-                <a href="https://www.facebook.com/cpse75/"><i class="fa fa-facebook-square fa-3x social"></i></a>
-	            <a href="https://twitter.com/bootsnipp"><i class="fa fa-twitter-square fa-3x social"></i></a>
-	            <a href="https://plus.google.com/+Bootsnipp-page"><i class="fa fa-google-plus-square fa-3x social"></i></a>
-	            <a href="mailto:recitsexil@gmail.com"><i class="fa fa-envelope-square fa-3x social"></i></a>
+                <a href="https://www.facebook.com/cpse75/"><i class="fa fa-facebook-square fa-3x social" style="color:white;"></i></a>
+	            <a href="https://twitter.com/bootsnipp"><i class="fa fa-twitter-square fa-3x social" style="color:white;"></i></a>
+	            <a href="https://plus.google.com/+Bootsnipp-page"><i class="fa fa-google-plus-square fa-3x social" style="color:white;"></i></a>
+	            <a href="mailto:recitsexil@gmail.com"><i class="fa fa-envelope-square fa-3x social" style="color:white;"></i></a>
 			</div>
         	<span class="text-muted">Paris d'Exil</span>
-      	</div>
     </footer>
-
     </body>
 
 </html>
