@@ -1,12 +1,14 @@
-{% extends "webApplication/base.html" %} {% load static %} {% block content %}
+{% extends "webApplication/base.html" %} {% load static %}
+{% block js %}
+<script type="text/javascript" src="{% static 'js/tools.js' %}"></script>
+{% endblock %}
 
+{% block content %}
 <div class="container" style="min-height:400px">
 
 	<div class="row">
 		<section>
 			<article>
-
-				{% if hebergeurs_list %}
 				<div class="scrollBox">
 					<table id="acrylic">
 						<thead>
@@ -17,16 +19,18 @@
 							</tr>
 						</thead>
 						<tbody>
-						{% for hebergeur in hebergeurs_list %}
+							{% for hebergeur in hebergeurs_list %}
 							<tr onclick="document.location='{% url 'listeHebergeurs' hebergeur.idpersonne.idpersonne %}'">
 								<td>{{hebergeur.idpersonne.nom}}</td>
 								<td>{{hebergeur.idpersonne.prenom}}</td>
 								<td>{{hebergeur.capaciteaccueil}}</td>
 							</tr>
-						{% endfor %}
+							{% endfor %}
 						</tbody>
 					</table>
 				</div>
+				<input type="text" id="searchBar" onkeyup="searchByName()" placeholder="Filtrer les hébergeurs..."> {% if hebergeurs_list %}
+
 				{% endif %}
 			</article>
 
@@ -73,11 +77,11 @@
 										<b>Adresse :</b>
 									</div>
 									<div class="col-sm-7">{{hebergeurSelection.adressepostale}}</div>
-	
+
 									<div class="clearfix"></div>
-	
+
 									<div class="bot-border"></div>
-	
+
 									</br>
 
 									<div class="col-sm-5 col-xs-6 tital ">
@@ -106,69 +110,69 @@
 										<b>Possède un compte Facebook :</b>
 									</div>
 									<div class="col-sm-7">{% if hebergeurSelection.facebook is not NULL%}Oui{% else %}Non{% endif %}</div>
-	
+
 									<div class="clearfix"></div>
-	
+
 									<div class="bot-border"></div>
-	
+
 									</br>
 
 									<div class="col-sm-5 col-xs-6 tital ">
 										<b>A signé la charte Paris d'Exil :</b>
 									</div>
 									<div class="col-sm-7">{% if hebergeurSelection.signaturecharte == 1%}Oui{% else %}Non{% endif %}</div>
-		
+
 									<div class="clearfix"></div>
-		
+
 									<div class="bot-border"></div>
-		
+
 									</br>
 
 									<div class="col-sm-5 col-xs-6 tital ">
 										<b>Capacité totale :</b>
 									</div>
 									<div class="col-sm-7">{{hebergeurSelection.capaciteaccueil}}</div>
-	
+
 									<div class="clearfix"></div>
-	
+
 									<div class="bot-border"></div>
-	
+
 									</br>
-									
+
 									<div class="col-sm-5 col-xs-6 tital ">
 										<b>Nombre lits simple :</b>
 									</div>
 									<div class="col-sm-7">{{hebergeurSelection.nblitsimple}}</div>
-	
+
 									<div class="clearfix"></div>
-	
+
 									<div class="bot-border"></div>
-	
+
 									</br>
 
 									<div class="col-sm-5 col-xs-6 tital ">
 										<b>Nombre lits double :</b>
 									</div>
 									<div class="col-sm-7">{{hebergeurSelection.nblitdouble}}</div>
-		
+
 									<div class="clearfix"></div>
-		
+
 									<div class="bot-border"></div>
-		
+
 									</br>
 
-									</div>
-									<!-- /.box-body -->
 								</div>
-								<!-- /.box -->
+								<!-- /.box-body -->
 							</div>
+							<!-- /.box -->
 						</div>
 					</div>
 				</div>
-				{% endif %}
-			</article>
-		</section>
 	</div>
+	{% endif %}
+	</article>
+	</section>
+</div>
 
 </div>
 
