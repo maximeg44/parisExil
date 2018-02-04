@@ -7,7 +7,7 @@
 #index { 
   margin:0;
   padding:0;
-  background: url("../img/OKL5OX0.jpg") no-repeat center fixed; 
+  background: url("../img/fond_index.jpg") no-repeat center fixed; 
   -webkit-background-size: cover;
   background-size: cover; 
   font-family:Roboto;
@@ -128,6 +128,8 @@ span.psw {
 
 .navbar-default {
     background-color: #4d0000;
+	margin:0;
+	border:0;
 }
 
 .nav.navbar-nav.navbar-left li a {

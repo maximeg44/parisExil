@@ -20,6 +20,8 @@ li {
 
 .navbar-default {
     background-color: #4d0000;
+    border:0;
+    margin:0;
 }
 
 .nav.navbar-nav.navbar-left li a {
