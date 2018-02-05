@@ -7,6 +7,9 @@ from datetime import datetime
 from _datetime import timedelta
 from .models import Hebergeur
 
+
+#Méthode associé à la page d'accueil du site
+#Elle permet de récupérer un ensemble de jeune n'était plus hébergé dans les 7 jours à venir.. 
 def index(request):
     start_date = datetime.today()
     delai = timedelta(7)
