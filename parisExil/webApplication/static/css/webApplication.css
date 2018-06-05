@@ -13,6 +13,16 @@ h2{
 	text-align:center;
 }
 
+.btn-glyphicon {
+    padding:8px;
+    background:#ffffff;
+    margin-right:4px;
+}
+.icon-btn {
+    padding: 1px 10px 3px 2px;
+    border-radius:50px;
+}
+
 body {
     background-color:#ffbb99;
 	margin-bottom: 60px;
