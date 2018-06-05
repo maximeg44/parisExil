@@ -78,7 +78,8 @@ li {
 
 .nav.navbar-nav.navbar-left li{
 	width:20%;
-	text-align:center;
+    text-align:center;
+    width: 180px;
 }
 
 .nav.navbar-nav.navbar-left{
