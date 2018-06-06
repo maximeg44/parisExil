@@ -14,8 +14,10 @@
 		<!-- La Modal -->
 		<div id="id01" class="modal">
 		<!--	<span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal">&times;</span> -->
+		
 			<!-- Formnulaire -->
-			<form class="modal-content animate" action="{% url 'index' %}">
+			<form class="modal-content animate" action="{% url 'connexion' %}" method="post">
+
 				<div class="imgcontainer">
 					<img src="{% static 'img/logo_site.png' %}" alt="Avatar" class="avatar">
 				</div>

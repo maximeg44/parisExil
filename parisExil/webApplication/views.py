@@ -6,10 +6,14 @@ from webApplication.models import Accueillir, Parler
 from datetime import datetime
 from _datetime import timedelta
 from .models import Hebergeur
+from django.contrib.auth import authenticate, login
+from django.http.response import HttpResponseRedirect
 
 
-#Méthode associé à la page d'accueil du site
-#Elle permet de récupérer un ensemble de jeune n'était plus hébergé dans les 7 jours à venir.. 
+
+
+# Méthode associé à la page d'accueil du site
+# Elle permet de récupérer un ensemble de jeune n'était plus hébergé dans les 7 jours à venir.. 
 def index(request):
     start_date = datetime.today()
     delai = timedelta(7)
@@ -31,8 +35,8 @@ def detailJeune(request, jeune_id):
         }
     return HttpResponse(template.render(context, request))
 
-#Méthode associée à la page de dispatch
-#Elle permet de récupérer la liste des hébergeurs et des jeunes afin de mettre en place le dispatch
+# Méthode associée à la page de dispatch
+# Elle permet de récupérer la liste des hébergeurs et des jeunes afin de mettre en place le dispatch
 def dispatcher(request):
     template = loader.get_template('webApplication/dispatch.html')
     start_date = datetime.today()
@@ -48,9 +52,9 @@ def dispatcher(request):
     return HttpResponse(template.render(context, request))
 
 
-#Méthode associée à la page listeHebergeurs
-#Cette méthode permet de récupérer la totalité des hébergeurs dans la base de données
-#Méthode à paramètre facultatif: si un id est donné en paramètre, on cherche l'hébergeur correspondant à cet id pour en afficher le détail du profil
+# Méthode associée à la page listeHebergeurs
+# Cette méthode permet de récupérer la totalité des hébergeurs dans la base de données
+# Méthode à paramètre facultatif: si un id est donné en paramètre, on cherche l'hébergeur correspondant à cet id pour en afficher le détail du profil
 def listeHebergeurs(request, hebergeur_id=None):
     hebergeurs_list = Hebergeur.objects.all()
     template = loader.get_template('webApplication/listeHebergeurs.html')
@@ -63,15 +67,15 @@ def listeHebergeurs(request, hebergeur_id=None):
 
     return HttpResponse(template.render(context, request))
 
-#Méthode associée à la page listeJeunes
-#Cette méthode permet de récupérer la totalité des jeunes dans la base de données
-#Méthode à paramètre facultatif: si un id est donné en paramètre, on cherche le jeune correspondant à cet id pour en afficher le détail du profil
-def listeJeunes(request, jeune_id = None):
+# Méthode associée à la page listeJeunes
+# Cette méthode permet de récupérer la totalité des jeunes dans la base de données
+# Méthode à paramètre facultatif: si un id est donné en paramètre, on cherche le jeune correspondant à cet id pour en afficher le détail du profil
+def listeJeunes(request, jeune_id=None):
     start_date = datetime.today()
     jeunes_list = Jeune.objects.all()
-    jeunes_heberges_list = Accueillir.objects.values_list('idpersonne',flat=True).filter(datefin__gte=start_date)
+    jeunes_heberges_list = Accueillir.objects.values_list('idpersonne', flat=True).filter(datefin__gte=start_date)
     template = loader.get_template('webApplication/listeJeunes.html')
-    context={}
+    context = {}
     context['jeunes_list'] = jeunes_list
     context['jeunes_heberges_list'] = jeunes_heberges_list
 
@@ -83,8 +87,28 @@ def listeJeunes(request, jeune_id = None):
 
     return HttpResponse(template.render(context, request))
 
-#Méthode associée à la page de connexion
+# Méthode associée à la page de connexion
 def connexion(request):
-    template = loader.get_template('webApplication/connexion.html')
-    context = {}
-    return HttpResponse(template.render(context, request))
+    error = False
+    if request.method == "POST":
+        user = request.POST['user']
+        pwd = request.POST['pwd']
+        user_obj = authenticate(username=user, password=pwd)
+        
+        if user_obj is not None:
+            login(request, user_obj)
+            return render(request, 'webApplication/index.html', locals())
+    return render(request, 'webApplication/connexion.html', locals())
+
+
+
+
+
+
+
+
+
+
+
+
+
