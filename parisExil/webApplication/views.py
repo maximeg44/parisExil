@@ -1,14 +1,15 @@
 from django.http import HttpResponse
 from django.template import loader
-from .models import Personne, Jeune
+from .models import Personne, Jeune, Accueillir, Parler, Membre, Hebergeur
 from django.shortcuts import render, get_object_or_404
-from webApplication.models import Accueillir, Parler
 from datetime import datetime
 from _datetime import timedelta
-from .models import Hebergeur
 from django.contrib.auth import authenticate, login
 from django.http.response import HttpResponseRedirect
-
+from bottle import request
+from gc import get_objects
+from django.contrib.auth.decorators import login_required
+from django.conf.global_settings import DATETIME_FORMAT
 
 
 
@@ -37,7 +38,39 @@ def detailJeune(request, jeune_id):
 
 # Méthode associée à la page de dispatch
 # Elle permet de récupérer la liste des hébergeurs et des jeunes afin de mettre en place le dispatch
+@login_required
 def dispatcher(request):
+    if request.method == 'POST':
+        accueillir = Accueillir()
+        hebergeur = Hebergeur.objects.get(idpersonne=request.POST["selectHebergeur"])
+        jeune = Jeune()
+
+        
+        
+        hebergeur = Hebergeur.objects.get(idpersonne=request.POST["selectHebergeur"])
+        jeune.idpersonne = Personne(request.POST["selectJeune"])
+        hebergeur.idpersonne = Personne(request.POST["selectHebergeur"])
+        
+        
+        """ RESTE A CONVERTIR LES PUTAINS DE DATE DE DD/MM/YY à YYYY-MM-DD"""
+        accueillir.datedebut = request.POST["dateDebut"]
+        accueillir.datefin = request.POST["dateFin"]
+        accueillir.idpersonne = jeune.get_idpersonne()
+        accueillir.idpersonne_1 = hebergeur.get_idpersonne()        
+        accueillir.idpersonne_2 = Personne(request.user.id)        
+        accueillir.adressemail = hebergeur
+        
+        accueillir.save()
+        
+        
+        print("date debut : " + accueillir.get_datedebut())
+        print("date fin : " + accueillir.get_datefin())
+        print("id jeune : " + accueillir.get_idpersonne().get_idpersonne())
+        print("id hebergeur : " + accueillir.get_idpersonne_1().get_idpersonne())
+        print("mail : " + str(accueillir.get_adressemail()))
+
+        
+    # else:
     template = loader.get_template('webApplication/dispatch.html')
     start_date = datetime.today()
     delai = timedelta(7)
@@ -48,7 +81,7 @@ def dispatcher(request):
         'jeunes_fin_hebergement_list' : jeunes_fin_hebergement_list,
         'hebergeurs_list' : hebergeurs_list,
         'today' : start_date
-        }
+    }
     return HttpResponse(template.render(context, request))
 
 
