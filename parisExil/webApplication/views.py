@@ -7,7 +7,6 @@ from datetime import datetime
 from _datetime import timedelta
 from django.contrib.auth import authenticate, login
 from django.http.response import HttpResponseRedirect
-from bottle import request
 from gc import get_objects
 from django.contrib.auth.decorators import login_required
 from django.conf.global_settings import DATETIME_FORMAT
