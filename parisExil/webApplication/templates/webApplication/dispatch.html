@@ -51,14 +51,14 @@
 					  <div class="form-group">
 						<label class="control-label">Du</label>
 						<div class="input-group date">
-							<input type="text" id="dateDebut" value required="required" class="form-control"><span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+							<input type="text" id="dateDebut" name="dateDebut" value required="required" class="form-control"><span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
 						</div>
 
 						<br />
 
 						<label class="control-label">Au</label>
 						<div class="input-group date">
-							<input type="text" id="dateFin" value required="required" class="form-control"><span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+							<input type="text" id="dateFin" name="dateFin" value required="required" class="form-control"><span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
 						</div>
 					</div>
 
@@ -80,7 +80,7 @@
 
 						<label class="control-label">Le Jeune à héberger</label>
 						<div class="input-group">
-							<select onchange="recuperationSelect()" id="selectJeune" class="js-example-basic-single" style="width: 525px">
+							<select onchange="recuperationSelect()" id="selectJeune" title="selectJeune" name ="selectJeune" class="js-example-basic-single" style="width: 525px">
 								<option></option>
 								{% for jeune in jeunes_fin_hebergement_list %}
 								<option value="{{ jeune.idpersonne.idpersonne }}"> {{ jeune.idpersonne.nom }} {{jeune.idpersonne.prenom}}</option>
@@ -92,10 +92,12 @@
 
 						<label class="control-label">L'Hébergeur disponible</label>
 						<div class="input-group">
-							<select onchange="recuperationSelect()" id="selectHebergeur" class="js-example-basic-single" style="width: 525px">
+							<select onchange="recuperationSelect()" id="selectHebergeur" title="selectHebergeur" name ="selectHebergeur" class="js-example-basic-single" style="width: 525px">
 								<option></option>
 								{% for hebergeur in hebergeurs_list %}
-								<option value="{{ hebergeur.idpersonne.idpersonne }}">{{ hebergeur.idpersonne.nom }} {{hebergeur.idpersonne.prenom}}</option>
+								<option value="{{ hebergeur.idpersonne.idpersonne }}" >
+									{{ hebergeur.idpersonne.nom }} {{hebergeur.idpersonne.prenom}}
+								</option>
 								{% endfor %}
 							</select>
 						</div>
@@ -128,7 +130,7 @@
 						</div>
 
 						<!-- Bouton pour confirmer le dispatch choisi -->
-						<button class="btn btn-primary nextBtn btn-lg pull-right"  onclick="valider()" type="button" style="background-color:#4d0000;" >Valider</button>
+						<button class="btn btn-primary nextBtn btn-lg pull-right"  onclick="valider()" type="submit" style="background-color:#4d0000;" >Valider</button>
 						<p style="color: green;font-size: 20px;" id="message"></p>
 						<br />
 						</div>

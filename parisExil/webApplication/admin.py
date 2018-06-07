@@ -1,5 +1,6 @@
 from django.contrib import admin
-from .models import Nationalite, Hebergeur, Membre, Jeune, Langue, Avocat, Ecole, Disponibilite
+from .models import Nationalite, Hebergeur, Membre, Jeune, Langue, Avocat, Ecole, Disponibilite, Accueillir
+
 
 admin.site.register(Nationalite)
 admin.site.register(Hebergeur)
@@ -9,4 +10,5 @@ admin.site.register(Langue)
 admin.site.register(Avocat)
 admin.site.register(Ecole)
 admin.site.register(Disponibilite)
+admin.site.register(Accueillir)
 
