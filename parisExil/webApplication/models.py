@@ -207,7 +207,7 @@ class Hebergeur(models.Model):
     capaciteaccueil = models.IntegerField(db_column='capaciteAccueil')  # Field name made lowercase.
     nblitsimple = models.IntegerField(db_column='nbLitSimple', blank=True, null=True)  # Field name made lowercase.
     nblitdouble = models.IntegerField(db_column='nbLitDouble', blank=True, null=True)  # Field name made lowercase.
-    idpersonne = models.ForeignKey('Personne', models.DO_NOTHING, related_name='leHebergeur', db_column='idPersonne')  # Field name made lowercase.
+    idpersonne = models.ForeignKey('Personne', on_delete=models.CASCADE, related_name='leHebergeur', db_column='idPersonne')  # Field name made lowercase.
 
     class Meta:
         managed = False

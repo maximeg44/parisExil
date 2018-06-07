@@ -12,6 +12,8 @@ urlpatterns = [
     path('dispatch', views.dispatcher, name='dispatch'),
     path('listeHebergeurs/', views.listeHebergeurs, name='listeHebergeurs'),
     path('listeHebergeurs/<int:hebergeur_id>/', views.listeHebergeurs, name='listeHebergeurs'),
+    path('listeHebergeurs/delete/<int:pk>/', views.deleteHebergeur, name='deleteHebergeur'),
     path('listeJeunes/', views.listeJeunes, name='listeJeunes'),
     path('listeJeunes/<int:jeune_id>/', views.listeJeunes, name='listeJeunes'),
+    path('listeJeunes/delete/<int:pk>/', views.deleteJeune, name='deleteJeune'),
 ]

@@ -1,7 +1,7 @@
 from django.http import HttpResponse
 from django.template import loader
 from .models import Personne, Jeune
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from webApplication.models import Accueillir, Parler
 from datetime import datetime
 from _datetime import timedelta
@@ -43,7 +43,7 @@ def dispatcher(request):
     delai = timedelta(7)
     end_date = start_date + delai
     jeunes_fin_hebergement_list = Accueillir.objects.all().filter(datefin__lte=end_date) 
-    hebergeurs_list = Hebergeur.objects.all()    
+    hebergeurs_list = Hebergeur.objects.all()
     context = {
         'jeunes_fin_hebergement_list' : jeunes_fin_hebergement_list,
         'hebergeurs_list' : hebergeurs_list,
@@ -94,16 +94,27 @@ def connexion(request):
         user = request.POST['user']
         pwd = request.POST['pwd']
         user_obj = authenticate(username=user, password=pwd)
-        
+
         if user_obj is not None:
             login(request, user_obj)
             return render(request, 'webApplication/index.html', locals())
     return render(request, 'webApplication/connexion.html', locals())
 
+def deleteHebergeur(request, pk):
+    hebergeurSelection = get_object_or_404(Hebergeur, idpersonne=pk)
+    hebergeurSelection.delete()
+    template = loader.get_template('webApplication/listeHebergeurs.html')
+    context = {}
+    context['hebergeurs_list'] = Hebergeur.objects.all()
+    return HttpResponse(template.render(context, request))
 
-
-
-
+def deleteJeune(request, pk):
+    jeuneSelection = get_object_or_404(Jeune, idpersonne=pk)
+    jeuneSelection.delete()
+    template = loader.get_template('webApplication/listeJeunes.html')
+    context = {}
+    context['jeunes_list'] = Jeune.objects.all()
+    return HttpResponse(template.render(context, request))
 
 
 

@@ -43,7 +43,7 @@
 						</tbody>
 					</table>
 				</div>
-				
+
 
 				{% endif %}
 			</article>
@@ -173,10 +173,10 @@
 									<div class="clearfix"></div>
 
 									<div style="padding-top: 20px;" class="bot-border">
-										<a class="btn icon-btn btn-danger" href="#">
+										<a class="btn icon-btn btn-danger" href="{% url 'deleteHebergeur' pk=hebergeurSelection.idpersonne.idpersonne %}">
 											<span class="glyphicon btn-glyphicon glyphicon-trash img-circle text-danger"></span>
 											Supprimer
-											</a>
+										</a>
 									</div>
 
 									</br>
