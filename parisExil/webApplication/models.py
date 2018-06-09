@@ -536,7 +536,7 @@ class Accueillir(models.Model):
     def set_commentaire(self, value):
         self.commentaire = value
 
-    datedebut = models.DateField(db_column='dateDebut', blank=True, null=True)  # Field name made lowercase.
+    datedebut = models.DateField(db_column='dateDebut', blank=True, primary_key=True)  # Field name made lowercase.
     datefin = models.DateField(db_column='dateFin', blank=True, null=True)  # Field name made lowercase.
     commentaire = models.CharField(db_column='commentaire', max_length=250, blank=True, null=True)
     adressemail = models.OneToOneField(Hebergeur, models.DO_NOTHING, db_column='adresseMail', primary_key=True)  # Field name made lowercase.

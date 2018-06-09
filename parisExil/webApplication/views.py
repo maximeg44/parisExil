@@ -7,9 +7,9 @@ from datetime import datetime
 from _datetime import timedelta
 from django.contrib.auth import authenticate, login
 from django.http.response import HttpResponseRedirect
-from gc import get_objects
 from django.contrib.auth.decorators import login_required
-from django.conf.global_settings import DATETIME_FORMAT
+from django.utils.dateparse import parse_date
+
 
 
 
@@ -53,29 +53,51 @@ def dispatcher(request):
         
         
         """ RESTE A CONVERTIR LES PUTAINS DE DATE DE DD/MM/YY à YYYY-MM-DD"""
-        accueillir.datedebut = request.POST["dateDebut"]
-        accueillir.datefin = request.POST["dateFin"]
+        
+        """Conversion de la date de debut au bon format"""
+        dateDebut =  request.POST["dateDebut"]
+        day = dateDebut[:2]
+        month = dateDebut[3:5]
+        year = '20' + dateDebut[6:8]
+        dateDebut = year + '-' + month + '-' + day
+        date_object_debut = datetime.strptime(dateDebut, "%Y-%m-%d")
+        
+        """Conversion de la date de fin au bon format"""
+        dateFin = request.POST["dateFin"]
+        day = dateFin[:2]
+        month = dateFin[3:5]
+        year = '20' + dateFin[6:8]
+        dateFin = year + '-' + month + '-' + day
+        date_object_fin = datetime.strptime(dateFin, "%Y-%m-%d")
+        
+        print(date_object_debut)
+        print(date_object_fin)
+        
+
+
+        
+        accueillir.datedebut = date_object_debut
+        accueillir.datefin = date_object_fin
         accueillir.idpersonne = jeune.get_idpersonne()
         accueillir.idpersonne_1 = hebergeur.get_idpersonne()        
         accueillir.idpersonne_2 = Personne(request.user.id)        
         accueillir.adressemail = hebergeur
         
-        accueillir.save()
+        accueillir.save(force_insert=True)
         
         
-        print("date debut : " + accueillir.get_datedebut())
+        """print("date debut : " + accueillir.get_datedebut())
         print("date fin : " + accueillir.get_datefin())
         print("id jeune : " + accueillir.get_idpersonne().get_idpersonne())
         print("id hebergeur : " + accueillir.get_idpersonne_1().get_idpersonne())
-        print("mail : " + str(accueillir.get_adressemail()))
-
+        print("mail : " + str(accueillir.get_adressemail()))"""
         
     # else:
     template = loader.get_template('webApplication/dispatch.html')
     start_date = datetime.today()
     delai = timedelta(7)
     end_date = start_date + delai
-    jeunes_fin_hebergement_list = Accueillir.objects.all().filter(datefin__lte=end_date) 
+    jeunes_fin_hebergement_list = Jeune.objects.all() #Accueillir.objects.all().filter(datefin__lte=end_date)
     hebergeurs_list = Hebergeur.objects.all()
     context = {
         'jeunes_fin_hebergement_list' : jeunes_fin_hebergement_list,
