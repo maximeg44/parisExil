@@ -19,7 +19,7 @@ def index(request):
     start_date = datetime.today()
     delai = timedelta(7)
     end_date = start_date + delai
-    jeunes_fin_hebergement_list = Accueillir.objects.all().filter(datefin__lte=end_date) 
+    jeunes_fin_hebergement_list = Accueillir.objects.all().filter(datefin__lte=end_date)
     template = loader.get_template('webApplication/index.html')
     context = {
         'jeunes_fin_hebergement_list' : jeunes_fin_hebergement_list,
@@ -44,15 +44,11 @@ def dispatcher(request):
         accueillir = Accueillir()
         hebergeur = Hebergeur.objects.get(idpersonne=request.POST["selectHebergeur"])
         jeune = Jeune()
-
-        
         
         hebergeur = Hebergeur.objects.get(idpersonne=request.POST["selectHebergeur"])
         jeune.idpersonne = Personne(request.POST["selectJeune"])
         hebergeur.idpersonne = Personne(request.POST["selectHebergeur"])
         
-        
-        """ RESTE A CONVERTIR LES PUTAINS DE DATE DE DD/MM/YY à YYYY-MM-DD"""
         
         """Conversion de la date de debut au bon format"""
         dateDebut =  request.POST["dateDebut"]
@@ -69,11 +65,6 @@ def dispatcher(request):
         year = '20' + dateFin[6:8]
         dateFin = year + '-' + month + '-' + day
         date_object_fin = datetime.strptime(dateFin, "%Y-%m-%d")
-        
-        print(date_object_debut)
-        print(date_object_fin)
-        
-
 
         
         accueillir.datedebut = date_object_debut
@@ -84,13 +75,6 @@ def dispatcher(request):
         accueillir.adressemail = hebergeur
         
         accueillir.save(force_insert=True)
-        
-        
-        """print("date debut : " + accueillir.get_datedebut())
-        print("date fin : " + accueillir.get_datefin())
-        print("id jeune : " + accueillir.get_idpersonne().get_idpersonne())
-        print("id hebergeur : " + accueillir.get_idpersonne_1().get_idpersonne())
-        print("mail : " + str(accueillir.get_adressemail()))"""
         
     # else:
     template = loader.get_template('webApplication/dispatch.html')
