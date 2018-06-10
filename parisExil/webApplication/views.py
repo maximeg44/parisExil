@@ -1,14 +1,12 @@
 from django.http import HttpResponse
 from django.template import loader
-from .models import Personne, Jeune, Accueillir, Parler, Membre, Hebergeur
-from django.shortcuts import render, get_object_or_404, redirect
-from webApplication.models import Accueillir, Parler
+from .models import Personne, Jeune, Accueillir, Parler, Hebergeur
+from django.shortcuts import render, get_object_or_404
 from datetime import datetime
 from _datetime import timedelta
 from django.contrib.auth import authenticate, login
-from django.http.response import HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
-from django.utils.dateparse import parse_date
+
 
 
 
