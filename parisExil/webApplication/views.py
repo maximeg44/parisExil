@@ -1,16 +1,24 @@
 from django.http import HttpResponse
 from django.template import loader
+<<<<<<< HEAD
 from .models import Personne, Jeune, Accueillir, Parler, Membre, Hebergeur, Disponibilite, Langue
 from django.shortcuts import render, get_object_or_404, redirect
 from webApplication.models import Accueillir, Parler
+=======
+from .models import Personne, Jeune, Accueillir, Parler, Hebergeur
+from django.shortcuts import render, get_object_or_404
+>>>>>>> 53646690fb6efa6b177bd61d1a9a92a75301f3d5
 from datetime import datetime
 from _datetime import timedelta
 from django.contrib.auth import authenticate, login
-from django.http.response import HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
+<<<<<<< HEAD
 from django.utils.dateparse import parse_date
 from django.db import models
 import re
+=======
+
+>>>>>>> 53646690fb6efa6b177bd61d1a9a92a75301f3d5
 
 
 
