@@ -21,6 +21,11 @@
 						</span>
 					</div>
 				</div>
+				
+				<a class="btn icon-btn btn-info" href="{% url 'hebergeurCreateOrUpdate' %}">
+					<span class="glyphicon btn-glyphicon glyphicon-pencil img-circle text-info"></span>
+					Ajouter un hébergeur
+				</a>
 
 				<br />
 				<div class="scrollBox">
@@ -176,6 +181,10 @@
 										<a class="btn icon-btn btn-danger" href="{% url 'deleteHebergeur' pk=hebergeurSelection.idpersonne.idpersonne %}">
 											<span class="glyphicon btn-glyphicon glyphicon-trash img-circle text-danger"></span>
 											Supprimer
+										</a>
+										<a class="btn icon-btn btn-info" href="{% url 'hebergeurCreateOrUpdate' hebergeur_id=hebergeurSelection.idpersonne.idpersonne %}">
+											<span class="glyphicon btn-glyphicon glyphicon-pencil img-circle text-info"></span>
+											Modifier
 										</a>
 									</div>
 

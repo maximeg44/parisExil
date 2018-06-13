@@ -1,6 +1,6 @@
 from django.http import HttpResponse
 from django.template import loader
-from .models import Personne, Jeune, Accueillir, Parler, Membre, Hebergeur
+from .models import Personne, Jeune, Accueillir, Parler, Membre, Hebergeur, Disponibilite, Langue
 from django.shortcuts import render, get_object_or_404, redirect
 from webApplication.models import Accueillir, Parler
 from datetime import datetime
@@ -9,6 +9,8 @@ from django.contrib.auth import authenticate, login
 from django.http.response import HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 from django.utils.dateparse import parse_date
+from django.db import models
+import re
 
 
 
@@ -126,6 +128,66 @@ def listeJeunes(request, jeune_id=None):
 
     return HttpResponse(template.render(context, request))
 
+#Méthode permettant de générer le formulaire de modification d'un hébergeur
+def hebergeurCreateOrUpdate(request, hebergeur_id=None):
+    template = loader.get_template('webApplication/formulaireHebergeur.html')
+    context = {}
+    if hebergeur_id != None:
+        hebergeurSelection = get_object_or_404(Hebergeur, idpersonne=hebergeur_id)
+        context['hebergeurSelection'] = hebergeurSelection
+        try:
+            disponibiliteSelection = Disponibilite.objects.get(adressemail=hebergeurSelection.adressemail)
+        except Disponibilite.DoesNotExist:
+            disponibiliteSelection = None
+        context['disponibilite'] = disponibiliteSelection
+
+    return HttpResponse(template.render(context, request))
+
+#Méthode permettant d'enregistrer dans la BDD les valeurs des champs du formulaire d'un hébergeur
+def modifyHebergeur(request):
+    if request.method == "POST":
+
+        nom = request.POST['nom']
+        prenom = request.POST['prenom']
+        adresse = request.POST['adresse']
+        telephone = request.POST['telephone']
+        mail = request.POST['mail']
+        facebook = request.POST['facebook']
+
+        if request.POST['signaturecharte'] == "True":
+            signatureCharte = True
+        else:
+            signatureCharte = False
+            
+        capaciteAccueil = request.POST['capaciteAccueil']
+        nbLitsSimples = request.POST['nbLitsSimples']
+        nbLitsDoubles = request.POST['nbLitsDoubles']
+        disponibiliteDebut = request.POST['dispoDebut']
+        disponibiliteFin = request.POST['dispoFin']
+        commentaires = request.POST['commentaires']
+
+        #Si la personne existe, on la met à jour
+        if request.POST['idpersonne']:
+            hebergeurId = request.POST['idpersonne']
+            objPersonne, personneCreated = Personne.objects.update_or_create(idpersonne = hebergeurId, defaults={'nom' : nom, 'prenom' : prenom, 'numtel' : telephone, 'commentaire' : commentaires,})
+        #Si elle n'existe pas, on la crée
+        else:
+            objPersonne = Personne.objects.create(nom = nom, prenom = prenom, numtel = telephone, commentaire = commentaires)
+        #On associe l'hébergeur à une personne
+        objHebergeur, hebergeurCreated = Hebergeur.objects.update_or_create(adressemail = mail, defaults={'idpersonne' : objPersonne, 'facebook' : facebook, 'signaturecharte' : signatureCharte, 'adressepostale' : adresse, 'capaciteaccueil' : capaciteAccueil, 'nblitsimple' : nbLitsSimples, 'nblitdouble' : nbLitsDoubles,})
+
+        #On vérifie que les dates ne sont pas nulles
+        matchDateDebut = re.match(r"\d{4}-\d{2}-\d{2}",disponibiliteDebut)
+        matchDateFin = re.match(r"\d{4}-\d{2}-\d{2}",disponibiliteFin)
+
+        #Si on a deux dates correctes, on ajoute les disponibilités dans la BDD
+        if matchDateDebut and matchDateFin:
+            Disponibilite.objects.select_related().filter(adressemail = mail).update(datedebut = disponibiliteDebut, datefin = disponibiliteFin)
+        else:
+            Disponibilite.objects.select_related().filter(adressemail = mail).update(datedebut = None, datefin = None)
+
+    return redirect('listeHebergeurs')        
+
 # Méthode associée à la page de connexion
 def connexion(request):
     error = False
@@ -154,7 +216,6 @@ def deleteJeune(request, pk):
     context = {}
     context['jeunes_list'] = Jeune.objects.all()
     return HttpResponse(template.render(context, request))
-
 
 
 
