@@ -1,24 +1,14 @@
 from django.http import HttpResponse
 from django.template import loader
-<<<<<<< HEAD
-from .models import Personne, Jeune, Accueillir, Parler, Membre, Hebergeur, Disponibilite, Langue
+from .models import Personne, Jeune, Accueillir, Parler, Membre, Hebergeur, Disponibilite, Langue, Ecole, Avocat, Nationalite
 from django.shortcuts import render, get_object_or_404, redirect
-from webApplication.models import Accueillir, Parler
-=======
-from .models import Personne, Jeune, Accueillir, Parler, Hebergeur
-from django.shortcuts import render, get_object_or_404
->>>>>>> 53646690fb6efa6b177bd61d1a9a92a75301f3d5
 from datetime import datetime
 from _datetime import timedelta
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
-<<<<<<< HEAD
 from django.utils.dateparse import parse_date
 from django.db import models
 import re
-=======
-
->>>>>>> 53646690fb6efa6b177bd61d1a9a92a75301f3d5
 
 
 
@@ -153,6 +143,7 @@ def hebergeurCreateOrUpdate(request, hebergeur_id=None):
 
 #Méthode permettant d'enregistrer dans la BDD les valeurs des champs du formulaire d'un hébergeur
 def modifyHebergeur(request):
+    #Récupération des données du formulaire
     if request.method == "POST":
 
         nom = request.POST['nom']
@@ -195,6 +186,81 @@ def modifyHebergeur(request):
             Disponibilite.objects.select_related().filter(adressemail = mail).update(datedebut = None, datefin = None)
 
     return redirect('listeHebergeurs')        
+
+
+#Méthode permettant de générer le formulaire de modification d'un hébergeur
+def jeuneCreateOrUpdate(request, jeune_id=None):
+    template = loader.get_template('webApplication/formulaireJeune.html')
+    context = {}
+    if jeune_id != None:
+        jeuneSelection = get_object_or_404(Jeune, idpersonne=jeune_id)
+        context['jeuneSelection'] = jeuneSelection
+
+    return HttpResponse(template.render(context, request))
+
+#Méthode permettant d'enregistrer dans la BDD les valeurs des champs du formulaire d'un hébergeur
+def modifyJeune(request):
+    #Récupération des données du formulaire
+    if request.method == "POST":
+
+        nom = request.POST['nom']
+        prenom = request.POST['prenom']
+        telephone = request.POST['telephone']
+        dateNaissance = request.POST['dateNaissance']
+        datePriseEnCharge = request.POST['datePriseEnCharge']
+        signalePar = request.POST['signalePar']
+        suiviPar = request.POST['suiviPar']
+
+        if request.POST['suiviadji'] == "True":
+            suiviadji = True
+        else:
+            suiviadji = False
+
+        nomJuge = request.POST['nomJuge']
+
+        if request.POST['demie'] == "True":
+            demie = True
+        else:
+            demie = False
+
+        if request.POST['recours'] == "True":
+            recours = True
+        else:
+            recours = False
+
+        if request.POST['appel'] == "True":
+            appel = True
+        else:
+            appel = False
+
+        if request.POST['testOsseux'] == "True":
+            testOsseux = True
+        else:
+            testOsseux = False
+
+        sante = request.POST['sante']
+        commentaires = request.POST['commentaires']
+
+        #On traite les dates dans le cas ou une date du formulaire n'ai pas été remplie
+        if not re.match(r"\d{4}-\d{2}-\d{2}",dateNaissance):
+            dateNaissance = None
+
+        if not re.match(r"\d{4}-\d{2}-\d{2}",datePriseEnCharge):
+            datePriseEnCharge = None
+
+        #Si la personne existe, on la met à jour
+        if request.POST['idpersonne']:
+            jeuneId = request.POST['idpersonne']
+            objPersonne, personneCreated = Personne.objects.update_or_create(idpersonne = jeuneId, defaults={'nom' : nom, 'prenom' : prenom, 'numtel' : telephone, 'commentaire' : commentaires,})
+        #Si elle n'existe pas, on la crée
+        else:
+            objPersonne = Personne.objects.create(nom = nom, prenom = prenom, numtel = telephone, commentaire = commentaires)
+        
+        #On associe le jeune à une personne
+        objJeune, jeuneCreated = Jeune.objects.update_or_create(idpersonne = objPersonne, defaults={'datenaissance' : dateNaissance, 'datepriseencharge' : datePriseEnCharge, 'signalerpar' : signalePar, 'suivipar' : suiviPar, 'suiviadji' : suiviadji, 'nomjuge' : nomJuge, 'demie' : demie, 'recours' : recours, 'appel' : appel, 'testosseux' : testOsseux, 'sante' : sante, 'idecole' : get_object_or_404(Ecole, idecole=1), 'idavocat' : get_object_or_404(Avocat, idavocat=1), 'pays' : get_object_or_404(Nationalite, pays="France")})
+
+    return redirect('listeJeunes')        
+
 
 # Méthode associée à la page de connexion
 def connexion(request):

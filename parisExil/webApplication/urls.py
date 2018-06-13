@@ -18,5 +18,8 @@ urlpatterns = [
     path('listeHebergeurs/delete/<int:pk>/', views.deleteHebergeur, name='deleteHebergeur'),
     path('listeJeunes/', views.listeJeunes, name='listeJeunes'),
     path('listeJeunes/<int:jeune_id>/', views.listeJeunes, name='listeJeunes'),
+    path('jeuneCreateOrUpdate/', views.jeuneCreateOrUpdate, name='jeuneCreateOrUpdate'),
+    path('jeuneCreateOrUpdate/<int:jeune_id>/', views.jeuneCreateOrUpdate, name='jeuneCreateOrUpdate'),
+    path('modifyJeune/', views.modifyJeune, name='modifyJeune'),
     path('listeJeunes/delete/<int:pk>/', views.deleteJeune, name='deleteJeune'),
 ]

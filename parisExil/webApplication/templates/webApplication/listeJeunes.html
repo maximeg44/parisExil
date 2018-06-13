@@ -23,6 +23,11 @@
 								</span>
 						</div>
 					</div>
+
+					<a class="btn icon-btn btn-info" href="{% url 'jeuneCreateOrUpdate' %}">
+						<span class="glyphicon btn-glyphicon glyphicon-pencil img-circle text-info"></span>
+						Ajouter un jeune
+					</a>
 					
 				<br />
 				<div class="scrollBox">
@@ -184,6 +189,10 @@
 													<span class="glyphicon btn-glyphicon glyphicon-trash img-circle text-danger"></span>
 													Supprimer
 												</a>
+											<a class="btn icon-btn btn-info" href="{% url 'jeuneCreateOrUpdate' jeune_id=jeuneSelection.idpersonne.idpersonne %}">
+												<span class="glyphicon btn-glyphicon glyphicon-pencil img-circle text-info"></span>
+												Modifier
+											</a>
 									</div>
 			
 									</br>
