@@ -11,36 +11,77 @@
 			<article>
                 <form action="{% url 'modifyJeune' %}" method="post">
                     <input type="hidden" name="idpersonne" value="{{jeuneSelection.idpersonne.idpersonne|default:""}}">
-                    Nom: <input type="text" name="nom" value="{{jeuneSelection.idpersonne.nom|default:""}}"><br>
-                    Prénom: <input type="text" name="prenom" value="{{jeuneSelection.idpersonne.prenom|default:"" }}"><br>
-                    Téléphone: <input type="text" name="telephone" value="{{jeuneSelection.idpersonne.numtel|default:"" }}"><br>
-                    Date de naissance: <input type="date" name="dateNaissance" value="{{jeuneSelection.datenaissance|date:"o-m-d"|default:None}}"><br>
-                    Date de prise en charge: <input type="date" name="datePriseEnCharge" value="{{jeuneSelection.datepriseencharge|date:"o-m-d"|default:None}}"><br>
-                    Signalé par: <input type="text" name="signalePar" value="{{jeuneSelection.signalepar|default:"" }}"><br>
-                    Suivi par: <input type="text" name="suiviPar" value="{{jeuneSelection.suivipar|default:"" }}"><br>
-                    Suivi ADJI: <select name="suiviadji" style="width: 10%">
-                                            <option value="True" {% if jeuneSelection and jeuneSelection.suiviadji == True %} selected {% endif %}>Oui</option>
-                                            <option value="False" {% if jeuneSelection == none or jeuneSelection.suiviadji == False %} selected {% endif %}>Non</option>
-                                       </select><br>
-                    Nom du juge: <input type="text" name="nomJuge" value="{{jeuneSelection.nomjuge|default:"" }}"><br>
-                    Demie: <select name="demie" style="width: 10%">
-                                    <option value="True" {% if jeuneSelection and jeuneSelection.demie == True %} selected {% endif %}>Oui</option>
-                                    <option value="False" {% if jeuneSelection == none or jeuneSelection.demie == False %} selected {% endif %}>Non</option>
-                                </select><br>
-                    Recours: <select name="recours" style="width: 10%">
-                                    <option value="True" {% if jeuneSelection and jeuneSelection.recours == True %} selected {% endif %}>Oui</option>
-                                    <option value="False" {% if jeuneSelection == none or jeuneSelection.recours == False %} selected {% endif %}>Non</option>
-                                </select><br>
-                    Appel: <select name="appel" style="width: 10%">
-                                    <option value="True" {% if jeuneSelection and jeuneSelection.appel == True %} selected {% endif %}>Oui</option>
-                                    <option value="False" {% if jeuneSelection == none or jeuneSelection.appel == False %} selected {% endif %}>Non</option>
-                           </select><br>
-                    Test osseux: <select name="testOsseux" style="width: 10%">
-                            <option value="True" {% if jeuneSelection and jeuneSelection.testosseux == True %} selected {% endif %}>Oui</option>
-                            <option value="False" {% if jeuneSelection == none or jeuneSelection.testosseux == False %} selected {% endif %}>Non</option>
-                       </select><br>
-                    Santé: <br><textarea rows="10" cols="50" name="sante">{{jeuneSelection.sante|default:"" }}</textarea><br>
-                    Commentaires: <br><textarea rows="10" cols="50" name="commentaires">{{jeuneSelection.idpersonne.commentaire|default:"" }}</textarea><br>
+					
+                    Nom: 
+					<input type="text" name="nom" value="{{jeuneSelection.idpersonne.nom|default:""}}">
+					
+                    Prénom: 
+					<input type="text" name="prenom" value="{{jeuneSelection.idpersonne.prenom|default:"" }}">
+					
+                    Téléphone: 
+					<input type="text" name="telephone" value="{{jeuneSelection.idpersonne.numtel|default:"" }}">
+					
+                    Date de naissance: 
+					<input type="date" name="dateNaissance" value="{{jeuneSelection.datenaissance|date:"o-m-d"|default:None}}">
+					
+					
+                    Date de prise en charge: 
+					<input type="date" name="datePriseEnCharge" value="{{jeuneSelection.datepriseencharge|date:"o-m-d"|default:None}}">
+					
+					
+                    Signalé par: 
+					<input type="text" name="signalePar" value="{{jeuneSelection.signalepar|default:"" }}">
+                    
+					
+					Suivi par: 
+					<input type="text" name="suiviPar" value="{{jeuneSelection.suivipar|default:"" }}">
+                   
+				   
+				    Suivi ADJI: 
+					<select name="suiviadji" style="width: 10%">
+                        <option value="True" {% if jeuneSelection and jeuneSelection.suiviadji == True %} selected {% endif %}>Oui</option>
+                        <option value="False" {% if jeuneSelection == none or jeuneSelection.suiviadji == False %} selected {% endif %}>Non</option>
+                    </select>
+                    
+					
+					Nom du juge: 
+					<input type="text" name="nomJuge" value="{{jeuneSelection.nomjuge|default:"" }}"><br>
+                    
+					
+					Demie: 
+					<select name="demie" style="width: 10%">
+                        <option value="True" {% if jeuneSelection and jeuneSelection.demie == True %} selected {% endif %}>Oui</option>
+                        <option value="False" {% if jeuneSelection == none or jeuneSelection.demie == False %} selected {% endif %}>Non</option>
+                    </select>
+                    
+					
+					Recours:
+					<select name="recours" style="width: 10%">
+                        <option value="True" {% if jeuneSelection and jeuneSelection.recours == True %} selected {% endif %}>Oui</option>
+                            <option value="False" {% if jeuneSelection == none or jeuneSelection.recours == False %} selected {% endif %}>Non</option>
+                    </select>
+                    
+					
+					Appel: 
+					<select name="appel" style="width: 10%">
+                        <option value="True" {% if jeuneSelection and jeuneSelection.appel == True %} selected {% endif %}>Oui</option>
+                        <option value="False" {% if jeuneSelection == none or jeuneSelection.appel == False %} selected {% endif %}>Non</option>
+                    </select>
+                    
+					
+					Test osseux: 
+					<select name="testOsseux" style="width: 10%">
+                        <option value="True" {% if jeuneSelection and jeuneSelection.testosseux == True %} selected {% endif %}>Oui</option>
+                        <option value="False" {% if jeuneSelection == none or jeuneSelection.testosseux == False %} selected {% endif %}>Non</option>
+                    </select>
+                    
+					
+					Santé: 
+					<textarea rows="10" cols="50" name="sante">{{jeuneSelection.sante|default:"" }}</textarea><br>
+                    
+					
+					Commentaires:
+					<textarea rows="10" cols="50" name="commentaires">{{jeuneSelection.idpersonne.commentaire|default:"" }}</textarea>
                     <input type="submit" value="Valider">
                 </form>
             </article>
