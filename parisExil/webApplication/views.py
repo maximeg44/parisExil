@@ -153,7 +153,7 @@ def modifyHebergeur(request):
         mail = request.POST['mail']
         facebook = request.POST['facebook']
 
-        if request.POST['signaturecharte'] == "True":
+        if request.POST['signatureCharte'] == "True":
             signatureCharte = True
         else:
             signatureCharte = False
