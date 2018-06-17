@@ -8,11 +8,8 @@ from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 
 
-
-
-
 # Méthode associé à la page d'accueil du site
-# Elle permet de récupérer un ensemble de jeune n'était plus hébergé dans les 7 jours à venir.. 
+# Elle permet de récupérer un ensemble de jeune n'était plus hébergé dans les 7 jours à venir..
 def index(request):
     start_date = datetime.today()
     delai = timedelta(7)
@@ -24,6 +21,8 @@ def index(request):
         }
     return HttpResponse(template.render(context, request))
 
+# Méthode associée à la page de la liste des jeunes
+# Elle permet de récupérer les informations d'un jeune séléctionné
 def detailJeune(request, jeune_id):
     jeune = get_object_or_404(Jeune, pk=jeune_id)
     liste_langue_parler = Parler.objects.all().filter(idpersonne=jeune_id)
@@ -137,6 +136,7 @@ def connexion(request):
             return render(request, 'webApplication/index.html', locals())
     return render(request, 'webApplication/connexion.html', locals())
 
+# Méthode qui permet de supprimer l'hébergeur séléctionné
 def deleteHebergeur(request, pk):
     hebergeurSelection = get_object_or_404(Hebergeur, idpersonne=pk)
     hebergeurSelection.delete()
@@ -145,6 +145,7 @@ def deleteHebergeur(request, pk):
     context['hebergeurs_list'] = Hebergeur.objects.all()
     return HttpResponse(template.render(context, request))
 
+# Méthode qui permet de supprimer le jeune séléctionné
 def deleteJeune(request, pk):
     jeuneSelection = get_object_or_404(Jeune, idpersonne=pk)
     jeuneSelection.delete()
