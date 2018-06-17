@@ -1,0 +1,112 @@
+{% extends "webApplication/base.html" %} {% load static %}
+{% block js %}
+<script type="text/javascript" src="{% static 'js/tools.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+<div class="container" style="min-height:400px">
+                <form class="form-horizontal" action="{% url 'modifyHebergeur' %}" method="post">
+                    <input type="hidden" name="idpersonne" value="{{hebergeurSelection.idpersonne.idpersonne|default:""}}">
+					<div class="form-group">
+						<label class="control-label col-sm-2" for="nom">Nom:</label>
+						<div class="col-sm-10">
+							<input type="text" class="form-control" name="nom" value="{{hebergeurSelection.idpersonne.nom|default:""}}">
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="control-label col-sm-2" for="prenom">Prénom:</label>
+						<div class="col-sm-10">
+							<input type="text" class="form-control" name="prenom" value="{{hebergeurSelection.idpersonne.prenom|default:"" }}">
+						</div>
+					</div>
+						
+					<div class="form-group">
+						<label class="control-label col-sm-2" for="adresse">Adresse:</label>
+						<div class="col-sm-10">
+							<input type="text" class="form-control" name="adresse" value="{{hebergeurSelection.adressepostale|default:"" }}">
+						</div>
+					</div>	
+						
+					<div class="form-group">
+						<label class="control-label col-sm-2" for="telephone">Téléphone:</label>
+						<div class="col-sm-10">
+							<input type="text" class="form-control" name="telephone" value="{{hebergeurSelection.idpersonne.numtel|default:"" }}">
+						</div>
+					</div>
+					
+					<div class="form-group">
+						<label class="control-label col-sm-2" for="mail">Mail:</label>
+						<div class="col-sm-10">
+							<input type="text" name="mail" class="form-control" value="{{hebergeurSelection.adressemail|default:"" }}">
+						</div>
+					</div>
+					
+					<div class="form-group">
+						<label class="control-label col-sm-2" for="facebook">Facebook:</label>
+						<div class="col-sm-10">
+							<input type="text" class="form-control" name="facebook" value="{{hebergeurSelection.facebook|default:"" }}">
+						</div>
+					</div>
+					
+					<div class="form-group">
+						<label class="control-label col-sm-2" for="signatureCharte">A signé la charte:</label>
+						 <div class="col-sm-10">
+							<select name="signatureCharte" class="form-control">
+								<!-- {% if hebergeurSelection and hebergeurSelection.signatureCharte == True %} -->
+									<!-- <option value="True" selected>Oui</option> -->
+									<!-- <option value="False">Non</option> -->
+								<!-- {% endif %} -->
+								<!-- {% if hebergeurSelection == none or hebergeurSelection.signatureCharte == False %} -->
+									<!-- <option value="True" >Oui</option> -->
+									<!-- <option value="False" selected>Non</option> -->
+								<!-- {% endif %} -->
+								<option value="True" {% if hebergeurSelection and hebergeurSelection.signaturecharte == True %} selected {% endif %}>Oui</option> 
+								<option value="False" {% if hebergeurSelection == none or hebergeurSelection.signaturecharte == False %} selected {% endif %}>Non</option> 
+							</select>
+						</div>
+					</div>
+					
+					<div class="form-group">
+						<label class="control-label col-sm-2" for="capaciteAccueil">Capacité d'accueil:</label>
+						<div class="col-sm-10">						
+							<input type="number" class="form-control" name="capaciteAccueil" value="{{hebergeurSelection.capaciteaccueil|default:"0"}}">
+						</div>
+					</div>						
+					<div class="form-group">
+						<label class="control-label col-sm-2" for="nbLitsSimples">Nombre de lits simples: </label>
+						<div class="col-sm-10">
+							<input type="number" class="form-control" name="nbLitsSimples" value="{{hebergeurSelection.nblitsimple|default:"0"}}">
+					    </div>
+					</div>	
+					<div class="form-group">
+						<label class="control-label col-sm-2" for="nbLitsDoubles">Nombre de lits doubles:</label>
+						<div class="col-sm-10">
+							<input type="number" class="form-control" name="nbLitsDoubles" value="{{hebergeurSelection.nblitdouble|default:"0"}}">
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="control-label col-sm-2" for="dispoDebut">Disponibilité début:</label>
+						<div class="col-sm-10">
+							<input type="date" class="form-control" name="dispoDebut" value="{{disponibilite.datedebut|date:"o-m-d"|default:None}}">
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="control-label col-sm-2" for="dispoFin">Disponibilité fin: </label>
+						<div class="col-sm-10">
+							<input type="date" class="form-control" name="dispoFin" value="{{disponibilite.datefin|date:"o-m-d"|default:None}}">
+					    </div>
+					</div>
+					<div class="form-group">
+						<label class="control-label col-sm-2" for="commentaires">Commentaires:</label>
+						<div class="col-sm-10">
+							<textarea rows="10" class="form-control" cols="50" name="commentaires">{{hebergeurSelection.idpersonne.commentaire|default:"" }}</textarea>
+					    </div>
+					</div>
+                       <!--<br><input type="textarea" rows="10" cols="50" name="commentaires" value="{{hebergeurSelection.idpersonne.commentaire|default:"" }}"><br>-->
+                    
+					<input type="submit" class="form-control" value="Valider">
+
+					
+                </form>
+			</div>
+{% endblock %}

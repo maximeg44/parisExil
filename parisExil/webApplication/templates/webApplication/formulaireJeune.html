@@ -1,0 +1,138 @@
+{% extends "webApplication/base.html" %} {% load static %}
+{% block js %}
+<script type="text/javascript" src="{% static 'js/tools.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+<div class="container" style="min-height:400px">
+    <form action="{% url 'modifyJeune' %}" class="form-horizontal" method="post">
+        <input type="hidden" name="idpersonne" value="{{jeuneSelection.idpersonne.idpersonne|default:""}}">
+							
+        <div class="form-group">
+			<label class="control-label col-sm-2" for="nom">Nom:</label>
+			<div class="col-sm-10">
+				<input type="text" name="nom" class="form-control" value="{{jeuneSelection.idpersonne.nom|default:""}}">
+			</div>
+		</div>
+        
+		<div class="form-group">
+			<label class="control-label col-sm-2" for="prenom">NomPrénom:</label> 
+			<div class="col-sm-10">
+				<input type="text" class="form-control" name="prenom" value="{{jeuneSelection.idpersonne.prenom|default:"" }}">
+			</div>
+		</div>	
+		
+        <div class="form-group">
+			<label class="control-label col-sm-2" for="telephone">NomTéléphone:</label>
+			<div class="col-sm-10">
+				<input type="text" class="form-control" name="telephone" value="{{jeuneSelection.idpersonne.numtel|default:"" }}">
+			</div>
+		</div>	
+		
+        <div class="form-group">
+			<label class="control-label col-sm-2" for="dateNaissance">NomDate de naissance:</label> 
+			<div class="col-sm-10">
+				<input type="date" class="form-control" name="dateNaissance" value="{{jeuneSelection.datenaissance|date:"o-m-d"|default:None}}">
+			</div>
+		</div>			
+					
+        <div class="form-group">
+			<label class="control-label col-sm-2" for="datePriseEnCharge">NomDate de prise en charge:</label>
+			<div class="col-sm-10">			
+				<input type="date" class="form-control" name="datePriseEnCharge" value="{{jeuneSelection.datepriseencharge|date:"o-m-d"|default:None}}">
+			</div>
+		</div>			
+		
+        <div class="form-group">
+			<label class="control-label col-sm-2" for="signalePar">NomSignalé par:</label> 
+			<div class="col-sm-10">
+				<input type="text"  class="form-control" name="signalePar" value="{{jeuneSelection.signalepar|default:"" }}">
+			</div>
+        </div> 
+		
+		<div class="form-group">
+			<label class="control-label col-sm-2" for="suiviPar">NomSuivi par:</label> 
+			<div class="col-sm-10">
+				<input type="text" class="form-control" name="suiviPar" value="{{jeuneSelection.suivipar|default:"" }}">
+			</div>
+        </div>          
+				   
+		<div class="form-group">
+			<label class="control-label col-sm-2" for="nom">NomSuivi ADJI:</label> 
+			<div class="col-sm-10">
+				<select name="suiviadji" class="form-control">
+					<option value="True" {% if jeuneSelection and jeuneSelection.suiviadji == True %} selected {% endif %}>Oui</option>
+					<option value="False" {% if jeuneSelection == none or jeuneSelection.suiviadji == False %} selected {% endif %}>Non</option>
+				</select>
+			</div>
+		</div>	
+		
+		<div class="form-group">
+			<label class="control-label col-sm-2" for="nom">NomNom du juge:</label> 
+			<div class="col-sm-10">
+				<input type="text" name="nomJuge" class="form-control" value="{{jeuneSelection.nomjuge|default:"" }}">
+			</div>
+        </div>            
+					
+		<div class="form-group">
+			<label class="control-label col-sm-2" for="demie">NomDemie:</label> 
+			<div class="col-sm-10">
+				<select name="demie" class="form-control">
+					<option value="True" {% if jeuneSelection and jeuneSelection.demie == True %} selected {% endif %}>Oui</option>
+					<option value="False" {% if jeuneSelection == none or jeuneSelection.demie == False %} selected {% endif %}>Non</option>
+				</select>
+			</div>   
+		</div>
+					
+		<div class="form-group">
+			<label class="control-label col-sm-2" for="recours">NomRecours:</label>
+			<div class="col-sm-10">
+				<select name="recours" class="form-control">
+					<option value="True" {% if jeuneSelection and jeuneSelection.recours == True %} selected {% endif %}>Oui</option>
+					<option value="False" {% if jeuneSelection == none or jeuneSelection.recours == False %} selected {% endif %}>Non</option>
+				</select>
+			</div> 
+		</div>	
+					
+		<div class="form-group">
+			<label class="control-label col-sm-2" for="appel">NomAppel:</label> 
+			<div class="col-sm-10">
+				<select name="appel" class="form-control">
+					<option value="True" {% if jeuneSelection and jeuneSelection.appel == True %} selected {% endif %}>Oui</option>
+					<option value="False" {% if jeuneSelection == none or jeuneSelection.appel == False %} selected {% endif %}>Non</option>
+				</select>
+			</div> 
+		</div>
+			
+		<div class="form-group">
+			<label class="control-label col-sm-2" for="testOsseux">NomTest osseux:</label> 
+			<div class="col-sm-10">
+				<select name="testOsseux" class="form-control">
+					<option value="True" {% if jeuneSelection and jeuneSelection.testosseux == True %} selected {% endif %}>Oui</option>
+					<option value="False" {% if jeuneSelection == none or jeuneSelection.testosseux == False %} selected {% endif %}>Non</option>
+				</select>
+			</div>
+		</div>
+					
+		<div class="form-group">
+			<label class="control-label col-sm-2" for="sante">NomSanté:</label> 
+			<div class="col-sm-10">
+				<textarea rows="10" class="form-control" cols="50" name="sante">{{jeuneSelection.sante|default:"" }}</textarea>
+			</div>
+        </div>            
+					
+		<div class="form-group">
+			<label class="control-label col-sm-2" for="commentaires">NomCommentaires:</label>
+			<div class="col-sm-10">
+				<textarea rows="10" class="form-control" cols="50" name="commentaires">{{jeuneSelection.idpersonne.commentaire|default:"" }}</textarea>
+			</div>
+		</div>			
+					
+        <input type="submit" class="form-control" value="Valider">
+	</form>
+</div>
+{% endblock %}
+
+commentaires
+
+sante (varchar)
