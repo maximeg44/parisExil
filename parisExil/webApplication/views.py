@@ -16,7 +16,7 @@ def index(request):
     start_date = datetime.today()
     delai = timedelta(7)
     end_date = start_date + delai
-    jeunes_fin_hebergement_list = Accueillir.objects.all().filter(datefin__lte=end_date)
+    jeunes_fin_hebergement_list = Accueillir.objects.all().filter(datefin__range=[start_date,end_date])
     template = loader.get_template('webApplication/index.html')
     context = {
         'jeunes_fin_hebergement_list' : jeunes_fin_hebergement_list,
