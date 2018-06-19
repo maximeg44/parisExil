@@ -180,9 +180,9 @@ def modifyHebergeur(request):
 
         #Si on a deux dates correctes, on ajoute les disponibilités dans la BDD
         if matchDateDebut and matchDateFin:
-            Disponibilite.objects.select_related().filter(adressemail = mail).update(datedebut = disponibiliteDebut, datefin = disponibiliteFin)
+            objDispo = Disponibilite.objects.update_or_create(adressemail = objHebergeur, defaults={'datedebut' : disponibiliteDebut, 'datefin' : disponibiliteFin})
         else:
-            Disponibilite.objects.select_related().filter(adressemail = mail).update(datedebut = None, datefin = None)
+            Disponibilite.objects.select_related().filter(adressemail = objHebergeur).delete()
 
     return redirect('listeHebergeurs')        
 
