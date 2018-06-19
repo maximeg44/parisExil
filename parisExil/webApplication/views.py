@@ -37,7 +37,6 @@ def detailJeune(request, jeune_id):
 
 # Méthode associée à la page de dispatch
 # Elle permet de récupérer la liste des hébergeurs et des jeunes afin de mettre en place le dispatch
-@login_required
 def dispatcher(request):
     if request.method == 'POST':
         accueillir = Accueillir()
