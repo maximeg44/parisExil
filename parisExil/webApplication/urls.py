@@ -8,8 +8,7 @@ from . import views
 
 urlpatterns = [
     path('', views.connexion, name='connexion'),
-    #path('index/', views.index, name='index'),
-    path(r'^index$', views.index, name='index'),
+    path('index/', views.index, name='index'),
     path('dispatch', views.dispatcher, name='dispatch'),
     path('listeHebergeurs/', views.listeHebergeurs, name='listeHebergeurs'),
     path('listeHebergeurs/<int:hebergeur_id>/', views.listeHebergeurs, name='listeHebergeurs'),
