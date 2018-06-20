@@ -46,20 +46,20 @@ def dispatcher(request):
         
         
         """Conversion de la date de debut au bon format"""
-        dateDebut =  request.POST["dateDebut"]
-        day = dateDebut[:2]
-        month = dateDebut[3:5]
-        year = '20' + dateDebut[6:8]
-        dateDebut = year + '-' + month + '-' + day
-        date_object_debut = datetime.strptime(dateDebut, "%Y-%m-%d")
+        date_debut =  request.POST["dateDebut"]
+        day = date_debut[:2]
+        month = date_debut[3:5]
+        year = '20' + date_debut[6:8]
+        date_debut = year + '-' + month + '-' + day
+        date_object_debut = datetime.strptime(date_debut, "%Y-%m-%d")
         
         """Conversion de la date de fin au bon format"""
-        dateFin = request.POST["dateFin"]
-        day = dateFin[:2]
-        month = dateFin[3:5]
-        year = '20' + dateFin[6:8]
-        dateFin = year + '-' + month + '-' + day
-        date_object_fin = datetime.strptime(dateFin, "%Y-%m-%d")
+        date_fin = request.POST["dateFin"]
+        day = date_fin[:2]
+        month = date_fin[3:5]
+        year = '20' + date_fin[6:8]
+        date_fin = year + '-' + month + '-' + day
+        date_object_fin = datetime.strptime(date_fin, "%Y-%m-%d")
 
         
         accueillir.datedebut = date_object_debut
@@ -94,8 +94,8 @@ def listeHebergeurs(request, hebergeur_id=None):
     context['hebergeurs_list'] = hebergeurs_list
 
     if hebergeur_id != None:
-        hebergeurSelection = get_object_or_404(Hebergeur, idpersonne=hebergeur_id)
-        context['hebergeurSelection'] = hebergeurSelection
+        hebergeur_selection = get_object_or_404(Hebergeur, idpersonne=hebergeur_id)
+        context['hebergeurSelection'] = hebergeur_selection
 
     return HttpResponse(template.render(context, request))
 
@@ -112,9 +112,9 @@ def listeJeunes(request, jeune_id=None):
     context['jeunes_heberges_list'] = jeunes_heberges_list
 
     if jeune_id != None:
-        jeuneSelection = get_object_or_404(Jeune, idpersonne=jeune_id)
+        jeune_selection = get_object_or_404(Jeune, idpersonne=jeune_id)
         liste_langue_parler = Parler.objects.all().filter(idpersonne=jeune_id)
-        context['jeuneSelection'] = jeuneSelection
+        context['jeuneSelection'] = jeune_selection
         context['liste_langue_parler'] = liste_langue_parler
 
     return HttpResponse(template.render(context, request))
@@ -124,13 +124,13 @@ def hebergeurCreateOrUpdate(request, hebergeur_id=None):
     template = loader.get_template('webApplication/formulaireHebergeur.html')
     context = {}
     if hebergeur_id != None:
-        hebergeurSelection = get_object_or_404(Hebergeur, idpersonne=hebergeur_id)
-        context['hebergeurSelection'] = hebergeurSelection
+        hebergeur_selection = get_object_or_404(Hebergeur, idpersonne=hebergeur_id)
+        context['hebergeurSelection'] = hebergeur_selection
         try:
-            disponibiliteSelection = Disponibilite.objects.get(adressemail=hebergeurSelection.adressemail)
+            disponibilite_selection = Disponibilite.objects.get(adressemail=hebergeur_selection.adressemail)
         except Disponibilite.DoesNotExist:
-            disponibiliteSelection = None
-        context['disponibilite'] = disponibiliteSelection
+            disponibilite_selection = None
+        context['disponibilite'] = disponibilite_selection
 
     return HttpResponse(template.render(context, request))
 
@@ -169,11 +169,11 @@ def modifyHebergeur(request):
         obj_hebergeur, hebergeurCreated = Hebergeur.objects.update_or_create(adressemail = mail, defaults={'idpersonne' : obj_personne, 'facebook' : facebook, 'signaturecharte' : signature_charte, 'adressepostale' : adresse, 'capaciteaccueil' : capacite_accueil, 'nblitsimple' : nb_lits_simples, 'nblitdouble' : nb_lits_doubles,})
 
         #On vérifie que les dates ne sont pas nulles
-        matchDateDebut = re.match(r"\d{4}-\d{2}-\d{2}",disponibilite_debut)
-        matchDateFin = re.match(r"\d{4}-\d{2}-\d{2}",disponibilite_fin)
+        match_date_debut = re.match(r"\d{4}-\d{2}-\d{2}",disponibilite_debut)
+        match_date_fin = re.match(r"\d{4}-\d{2}-\d{2}",disponibilite_fin)
 
         #Si on a deux dates correctes, on ajoute les disponibilités dans la BDD
-        if matchDateDebut and matchDateFin:
+        if match_date_debut and match_date_fin:
             objDispo = Disponibilite.objects.update_or_create(adressemail = obj_hebergeur, defaults={'datedebut' : disponibilite_debut, 'datefin' : disponibilite_fin})
         else:
             Disponibilite.objects.select_related().filter(adressemail = obj_hebergeur).delete()
@@ -186,8 +186,8 @@ def jeuneCreateOrUpdate(request, jeune_id=None):
     template = loader.get_template('webApplication/formulaireJeune.html')
     context = {}
     if jeune_id != None:
-        jeuneSelection = get_object_or_404(Jeune, idpersonne=jeune_id)
-        context['jeuneSelection'] = jeuneSelection
+        jeune_selection = get_object_or_404(Jeune, idpersonne=jeune_id)
+        context['jeuneSelection'] = jeune_selection
 
     return HttpResponse(template.render(context, request))
 
@@ -250,7 +250,7 @@ def modifyJeune(request):
             obj_personne = Personne.objects.create(nom = nom, prenom = prenom, numtel = telephone, commentaire = commentaires)
         
         #On associe le jeune à une personne
-        objJeune, jeuneCreated = Jeune.objects.update_or_create(idpersonne = obj_personne, defaults={'datenaissance' : date_naissance, 'datepriseencharge' : date_prise_en_charge, 'signalerpar' : signale_par, 'suivipar' : suivi_par, 'suiviadji' : suiviadji, 'nomjuge' : nom_juge, 'demie' : demie, 'recours' : recours, 'appel' : appel, 'testosseux' : test_osseux, 'sante' : sante, 'idecole' : get_object_or_404(Ecole, idecole=1), 'idavocat' : get_object_or_404(Avocat, idavocat=1), 'pays' : get_object_or_404(Nationalite, pays="France")})
+        obj_jeune, jeune_created = Jeune.objects.update_or_create(idpersonne = obj_personne, defaults={'datenaissance' : date_naissance, 'datepriseencharge' : date_prise_en_charge, 'signalerpar' : signale_par, 'suivipar' : suivi_par, 'suiviadji' : suiviadji, 'nomjuge' : nom_juge, 'demie' : demie, 'recours' : recours, 'appel' : appel, 'testosseux' : test_osseux, 'sante' : sante, 'idecole' : get_object_or_404(Ecole, idecole=1), 'idavocat' : get_object_or_404(Avocat, idavocat=1), 'pays' : get_object_or_404(Nationalite, pays="France")})
 
     return redirect('listeJeunes')        
 
@@ -270,8 +270,8 @@ def connexion(request):
 
 # Méthode qui permet de supprimer l'hébergeur séléctionné
 def deleteHebergeur(request, pk):
-    hebergeurSelection = get_object_or_404(Hebergeur, idpersonne=pk)
-    hebergeurSelection.delete()
+    hebergeur_selection = get_object_or_404(Hebergeur, idpersonne=pk)
+    hebergeur_selection.delete()
     template = loader.get_template('webApplication/listeHebergeurs.html')
     context = {}
     context['hebergeurs_list'] = Hebergeur.objects.all()
@@ -279,8 +279,8 @@ def deleteHebergeur(request, pk):
 
 # Méthode qui permet de supprimer le jeune séléctionné
 def deleteJeune(request, pk):
-    jeuneSelection = get_object_or_404(Jeune, idpersonne=pk)
-    jeuneSelection.delete()
+    jeune_selection = get_object_or_404(Jeune, idpersonne=pk)
+    jeune_selection.delete()
     template = loader.get_template('webApplication/listeJeunes.html')
     context = {}
     context['jeunes_list'] = Jeune.objects.all()
