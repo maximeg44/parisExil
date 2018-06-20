@@ -1,16 +1,14 @@
 from django.http import HttpResponse
 from django.template import loader
-from .models import Personne, Jeune, Accueillir, Parler, Membre, Hebergeur, Disponibilite, Langue, Ecole, Avocat, Nationalite
+from .models import Personne, Jeune, Accueillir, Parler, Hebergeur, Disponibilite, Ecole, Avocat, Nationalite
 from django.shortcuts import render, get_object_or_404, redirect
 from datetime import datetime
 from _datetime import timedelta
 from django.contrib.auth import authenticate, login
-from django.contrib.auth.decorators import login_required
 import re
 
 # Méthode associé à la page d'accueil du site
 # Elle permet de récupérer un ensemble de jeune n'était plus hébergé dans les 7 jours à venir..
-@login_required
 def index(request):
     start_date = datetime.today()
     delai = timedelta(7)
@@ -24,7 +22,6 @@ def index(request):
 
 # Méthode associée à la page de la liste des jeunes
 # Elle permet de récupérer les informations d'un jeune séléctionné
-@login_required
 def detailJeune(request, jeune_id):
     jeune = get_object_or_404(Jeune, pk=jeune_id)
     liste_langue_parler = Parler.objects.all().filter(idpersonne=jeune_id)
@@ -37,7 +34,6 @@ def detailJeune(request, jeune_id):
 
 # Méthode associée à la page de dispatch
 # Elle permet de récupérer la liste des hébergeurs et des jeunes afin de mettre en place le dispatch
-@login_required
 def dispatcher(request):
     if request.method == 'POST':
         accueillir = Accueillir()
@@ -50,20 +46,20 @@ def dispatcher(request):
         
         
         """Conversion de la date de debut au bon format"""
-        dateDebut = request.POST["dateDebut"]
-        day = dateDebut[:2]
-        month = dateDebut[3:5]
-        year = '20' + dateDebut[6:8]
-        dateDebut = year + '-' + month + '-' + day
-        date_object_debut = datetime.strptime(dateDebut, "%Y-%m-%d")
+        date_debut =  request.POST["dateDebut"]
+        day = date_debut[:2]
+        month = date_debut[3:5]
+        year = '20' + date_debut[6:8]
+        date_debut = year + '-' + month + '-' + day
+        date_object_debut = datetime.strptime(date_debut, "%Y-%m-%d")
         
         """Conversion de la date de fin au bon format"""
-        dateFin = request.POST["dateFin"]
-        day = dateFin[:2]
-        month = dateFin[3:5]
-        year = '20' + dateFin[6:8]
-        dateFin = year + '-' + month + '-' + day
-        date_object_fin = datetime.strptime(dateFin, "%Y-%m-%d")
+        date_fin = request.POST["dateFin"]
+        day = date_fin[:2]
+        month = date_fin[3:5]
+        year = '20' + date_fin[6:8]
+        date_fin = year + '-' + month + '-' + day
+        date_object_fin = datetime.strptime(date_fin, "%Y-%m-%d")
 
         
         accueillir.datedebut = date_object_debut
@@ -78,9 +74,7 @@ def dispatcher(request):
     # else:
     template = loader.get_template('webApplication/dispatch.html')
     start_date = datetime.today()
-    delai = timedelta(7)
-    end_date = start_date + delai
-    jeunes_fin_hebergement_list = Jeune.objects.all()  # Accueillir.objects.all().filter(datefin__lte=end_date)
+    jeunes_fin_hebergement_list = Jeune.objects.all()
     hebergeurs_list = Hebergeur.objects.all()
     context = {
         'jeunes_fin_hebergement_list' : jeunes_fin_hebergement_list,
@@ -93,7 +87,6 @@ def dispatcher(request):
 # Méthode associée à la page listeHebergeurs
 # Cette méthode permet de récupérer la totalité des hébergeurs dans la base de données
 # Méthode à paramètre facultatif: si un id est donné en paramètre, on cherche l'hébergeur correspondant à cet id pour en afficher le détail du profil
-@login_required
 def listeHebergeurs(request, hebergeur_id=None):
     hebergeurs_list = Hebergeur.objects.all()
     template = loader.get_template('webApplication/listeHebergeurs.html')
@@ -101,15 +94,14 @@ def listeHebergeurs(request, hebergeur_id=None):
     context['hebergeurs_list'] = hebergeurs_list
 
     if hebergeur_id != None:
-        hebergeurSelection = get_object_or_404(Hebergeur, idpersonne=hebergeur_id)
-        context['hebergeurSelection'] = hebergeurSelection
+        hebergeur_selection = get_object_or_404(Hebergeur, idpersonne=hebergeur_id)
+        context['hebergeurSelection'] = hebergeur_selection
 
     return HttpResponse(template.render(context, request))
 
 # Méthode associée à la page listeJeunes
 # Cette méthode permet de récupérer la totalité des jeunes dans la base de données
 # Méthode à paramètre facultatif: si un id est donné en paramètre, on cherche le jeune correspondant à cet id pour en afficher le détail du profil
-@login_required
 def listeJeunes(request, jeune_id=None):
     start_date = datetime.today()
     jeunes_list = Jeune.objects.all()
@@ -120,33 +112,31 @@ def listeJeunes(request, jeune_id=None):
     context['jeunes_heberges_list'] = jeunes_heberges_list
 
     if jeune_id != None:
-        jeuneSelection = get_object_or_404(Jeune, idpersonne=jeune_id)
+        jeune_selection = get_object_or_404(Jeune, idpersonne=jeune_id)
         liste_langue_parler = Parler.objects.all().filter(idpersonne=jeune_id)
-        context['jeuneSelection'] = jeuneSelection
+        context['jeuneSelection'] = jeune_selection
         context['liste_langue_parler'] = liste_langue_parler
 
     return HttpResponse(template.render(context, request))
 
-# Méthode permettant de générer le formulaire de modification d'un hébergeur
-@login_required
+#Méthode permettant de générer le formulaire de modification d'un hébergeur
 def hebergeurCreateOrUpdate(request, hebergeur_id=None):
     template = loader.get_template('webApplication/formulaireHebergeur.html')
     context = {}
     if hebergeur_id != None:
-        hebergeurSelection = get_object_or_404(Hebergeur, idpersonne=hebergeur_id)
-        context['hebergeurSelection'] = hebergeurSelection
+        hebergeur_selection = get_object_or_404(Hebergeur, idpersonne=hebergeur_id)
+        context['hebergeurSelection'] = hebergeur_selection
         try:
-            disponibiliteSelection = Disponibilite.objects.get(adressemail=hebergeurSelection.adressemail)
+            disponibilite_selection = Disponibilite.objects.get(adressemail=hebergeur_selection.adressemail)
         except Disponibilite.DoesNotExist:
-            disponibiliteSelection = None
-        context['disponibilite'] = disponibiliteSelection
+            disponibilite_selection = None
+        context['disponibilite'] = disponibilite_selection
 
     return HttpResponse(template.render(context, request))
 
-# Méthode permettant d'enregistrer dans la BDD les valeurs des champs du formulaire d'un hébergeur
-@login_required
+#Méthode permettant d'enregistrer dans la BDD les valeurs des champs du formulaire d'un hébergeur
 def modifyHebergeur(request):
-    # Récupération des données du formulaire
+    #Récupération des données du formulaire
     if request.method == "POST":
 
         nom = request.POST['nom']
@@ -157,71 +147,70 @@ def modifyHebergeur(request):
         facebook = request.POST['facebook']
 
         if request.POST['signatureCharte'] == "True":
-            signatureCharte = True
+            signature_charte = True
         else:
-            signatureCharte = False
+            signature_charte = False
             
-        capaciteAccueil = request.POST['capaciteAccueil']
-        nbLitsSimples = request.POST['nbLitsSimples']
-        nbLitsDoubles = request.POST['nbLitsDoubles']
-        disponibiliteDebut = request.POST['dispoDebut']
-        disponibiliteFin = request.POST['dispoFin']
+        capacite_accueil = request.POST['capaciteAccueil']
+        nb_lits_simples = request.POST['nbLitsSimples']
+        nb_lits_doubles = request.POST['nbLitsDoubles']
+        disponibilite_debut = request.POST['dispoDebut']
+        disponibilite_fin = request.POST['dispoFin']
         commentaires = request.POST['commentaires']
 
-        # Si la personne existe, on la met à jour
+        #Si la personne existe, on la met à jour
         if request.POST['idpersonne']:
-            hebergeurId = request.POST['idpersonne']
-            objPersonne, personneCreated = Personne.objects.update_or_create(idpersonne=hebergeurId, defaults={'nom' : nom, 'prenom' : prenom, 'numtel' : telephone, 'commentaire' : commentaires, })
-        # Si elle n'existe pas, on la crée
+            hebergeur_id = request.POST['idpersonne']
+            obj_personne, personne_created = Personne.objects.update_or_create(idpersonne = hebergeur_id, defaults={'nom' : nom, 'prenom' : prenom, 'numtel' : telephone, 'commentaire' : commentaires,})
+        #Si elle n'existe pas, on la crée
         else:
-            objPersonne = Personne.objects.create(nom=nom, prenom=prenom, numtel=telephone, commentaire=commentaires)
-        # On associe l'hébergeur à une personne
-        objHebergeur, hebergeurCreated = Hebergeur.objects.update_or_create(adressemail=mail, defaults={'idpersonne' : objPersonne, 'facebook' : facebook, 'signaturecharte' : signatureCharte, 'adressepostale' : adresse, 'capaciteaccueil' : capaciteAccueil, 'nblitsimple' : nbLitsSimples, 'nblitdouble' : nbLitsDoubles, })
+            obj_personne = Personne.objects.create(nom = nom, prenom = prenom, numtel = telephone, commentaire = commentaires)
+        #On associe l'hébergeur à une personne
+        obj_hebergeur, hebergeur_created = Hebergeur.objects.update_or_create(adressemail = mail, defaults={'idpersonne' : obj_personne, 'facebook' : facebook, 'signaturecharte' : signature_charte, 'adressepostale' : adresse, 'capaciteaccueil' : capacite_accueil, 'nblitsimple' : nb_lits_simples, 'nblitdouble' : nb_lits_doubles,})
 
-        # On vérifie que les dates ne sont pas nulles
-        matchDateDebut = re.match(r"\d{4}-\d{2}-\d{2}", disponibiliteDebut)
-        matchDateFin = re.match(r"\d{4}-\d{2}-\d{2}", disponibiliteFin)
+        #On vérifie que les dates ne sont pas nulles
+        match_date_debut = re.match(r"\d{4}-\d{2}-\d{2}",disponibilite_debut)
+        match_date_fin = re.match(r"\d{4}-\d{2}-\d{2}",disponibilite_fin)
+        
+        Disponibilite.objects.select_related().filter(adressemail = obj_hebergeur).delete()
 
-        # Si on a deux dates correctes, on ajoute les disponibilités dans la BDD
-        if matchDateDebut and matchDateFin:
-            Disponibilite.objects.select_related().filter(adressemail=mail).update(datedebut=disponibiliteDebut, datefin=disponibiliteFin)
-        else:
-            Disponibilite.objects.select_related().filter(adressemail=mail).update(datedebut=None, datefin=None)
+        #Si on a deux dates correctes, on ajoute les disponibilités dans la BDD
+        if match_date_debut and match_date_fin:
+            obj_dispo = Disponibilite.objects.update_or_create(adressemail = obj_hebergeur, defaults={'datedebut' : disponibilite_debut, 'datefin' : disponibilite_fin})
+            
 
     return redirect('listeHebergeurs')        
 
 
-# Méthode permettant de générer le formulaire de modification d'un hébergeur
-@login_required
+#Méthode permettant de générer le formulaire de modification d'un hébergeur
 def jeuneCreateOrUpdate(request, jeune_id=None):
     template = loader.get_template('webApplication/formulaireJeune.html')
     context = {}
     if jeune_id != None:
-        jeuneSelection = get_object_or_404(Jeune, idpersonne=jeune_id)
-        context['jeuneSelection'] = jeuneSelection
+        jeune_selection = get_object_or_404(Jeune, idpersonne=jeune_id)
+        context['jeuneSelection'] = jeune_selection
 
     return HttpResponse(template.render(context, request))
 
-# Méthode permettant d'enregistrer dans la BDD les valeurs des champs du formulaire d'un hébergeur
-@login_required
+#Méthode permettant d'enregistrer dans la BDD les valeurs des champs du formulaire d'un hébergeur
 def modifyJeune(request):
-    # Récupération des données du formulaire
+    #Récupération des données du formulaire
     if request.method == "POST":
 
         nom = request.POST['nom']
         prenom = request.POST['prenom']
         telephone = request.POST['telephone']
-        dateNaissance = request.POST['dateNaissance']
-        datePriseEnCharge = request.POST['datePriseEnCharge']
-        signalePar = request.POST['signalePar']
-        suiviPar = request.POST['suiviPar']
+        date_naissance = request.POST['dateNaissance']
+        date_prise_en_charge = request.POST['datePriseEnCharge']
+        signale_par = request.POST['signalePar']
+        suivi_par = request.POST['suiviPar']
 
         if request.POST['suiviadji'] == "True":
             suiviadji = True
         else:
             suiviadji = False
 
-        nomJuge = request.POST['nomJuge']
+        nom_juge = request.POST['nomJuge']
 
         if request.POST['demie'] == "True":
             demie = True
@@ -239,38 +228,36 @@ def modifyJeune(request):
             appel = False
 
         if request.POST['testOsseux'] == "True":
-            testOsseux = True
+            test_osseux = True
         else:
-            testOsseux = False
+            test_osseux = False
 
         sante = request.POST['sante']
         commentaires = request.POST['commentaires']
 
-        # On traite les dates dans le cas ou une date du formulaire n'ai pas été remplie
-        if not re.match(r"\d{4}-\d{2}-\d{2}", dateNaissance):
-            dateNaissance = None
+        #On traite les dates dans le cas ou une date du formulaire n'ai pas été remplie
+        if not re.match(r"\d{4}-\d{2}-\d{2}",date_naissance):
+            date_naissance = None
 
-        if not re.match(r"\d{4}-\d{2}-\d{2}", datePriseEnCharge):
-            datePriseEnCharge = None
+        if not re.match(r"\d{4}-\d{2}-\d{2}",date_prise_en_charge):
+            date_prise_en_charge = None
 
-        # Si la personne existe, on la met à jour
+        #Si la personne existe, on la met à jour
         if request.POST['idpersonne']:
-            jeuneId = request.POST['idpersonne']
-            objPersonne, personneCreated = Personne.objects.update_or_create(idpersonne=jeuneId, defaults={'nom' : nom, 'prenom' : prenom, 'numtel' : telephone, 'commentaire' : commentaires, })
-        # Si elle n'existe pas, on la crée
+            jeune_id = request.POST['idpersonne']
+            obj_personne, personne_created = Personne.objects.update_or_create(idpersonne = jeune_id, defaults={'nom' : nom, 'prenom' : prenom, 'numtel' : telephone, 'commentaire' : commentaires,})
+        #Si elle n'existe pas, on la crée
         else:
-            objPersonne = Personne.objects.create(nom=nom, prenom=prenom, numtel=telephone, commentaire=commentaires)
+            obj_personne = Personne.objects.create(nom = nom, prenom = prenom, numtel = telephone, commentaire = commentaires)
         
-        # On associe le jeune à une personne
-        objJeune, jeuneCreated = Jeune.objects.update_or_create(idpersonne=objPersonne, defaults={'datenaissance' : dateNaissance, 'datepriseencharge' : datePriseEnCharge, 'signalerpar' : signalePar, 'suivipar' : suiviPar, 'suiviadji' : suiviadji, 'nomjuge' : nomJuge, 'demie' : demie, 'recours' : recours, 'appel' : appel, 'testosseux' : testOsseux, 'sante' : sante, 'idecole' : get_object_or_404(Ecole, idecole=1), 'idavocat' : get_object_or_404(Avocat, idavocat=1), 'pays' : get_object_or_404(Nationalite, pays="France")})
+        #On associe le jeune à une personne
+        obj_jeune, jeune_created = Jeune.objects.update_or_create(idpersonne = obj_personne, defaults={'datenaissance' : date_naissance, 'datepriseencharge' : date_prise_en_charge, 'signalerpar' : signale_par, 'suivipar' : suivi_par, 'suiviadji' : suiviadji, 'nomjuge' : nom_juge, 'demie' : demie, 'recours' : recours, 'appel' : appel, 'testosseux' : test_osseux, 'sante' : sante, 'idecole' : get_object_or_404(Ecole, idecole=1), 'idavocat' : get_object_or_404(Avocat, idavocat=1), 'pays' : get_object_or_404(Nationalite, pays="France")})
 
     return redirect('listeJeunes')        
 
 
 # Méthode associée à la page de connexion
-@login_required
 def connexion(request):
-    error = False
     if request.method == "POST":
         user = request.POST['user']
         pwd = request.POST['pwd']
@@ -282,20 +269,18 @@ def connexion(request):
     return render(request, 'webApplication/connexion.html', locals())
 
 # Méthode qui permet de supprimer l'hébergeur séléctionné
-@login_required
 def deleteHebergeur(request, pk):
-    hebergeurSelection = get_object_or_404(Hebergeur, idpersonne=pk)
-    hebergeurSelection.delete()
+    hebergeur_selection = get_object_or_404(Hebergeur, idpersonne=pk)
+    hebergeur_selection.delete()
     template = loader.get_template('webApplication/listeHebergeurs.html')
     context = {}
     context['hebergeurs_list'] = Hebergeur.objects.all()
     return HttpResponse(template.render(context, request))
 
 # Méthode qui permet de supprimer le jeune séléctionné
-@login_required
 def deleteJeune(request, pk):
-    jeuneSelection = get_object_or_404(Jeune, idpersonne=pk)
-    jeuneSelection.delete()
+    jeune_selection = get_object_or_404(Jeune, idpersonne=pk)
+    jeune_selection.delete()
     template = loader.get_template('webApplication/listeJeunes.html')
     context = {}
     context['jeunes_list'] = Jeune.objects.all()
