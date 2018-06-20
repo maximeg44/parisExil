@@ -1,13 +1,10 @@
 from django.http import HttpResponse
 from django.template import loader
-from .models import Personne, Jeune, Accueillir, Parler, Membre, Hebergeur, Disponibilite, Langue, Ecole, Avocat, Nationalite
+from .models import Personne, Jeune, Accueillir, Parler, Hebergeur, Disponibilite, Ecole, Avocat, Nationalite
 from django.shortcuts import render, get_object_or_404, redirect
 from datetime import datetime
 from _datetime import timedelta
 from django.contrib.auth import authenticate, login
-from django.contrib.auth.decorators import login_required
-from django.utils.dateparse import parse_date
-from django.db import models
 import re
 
 # Méthode associé à la page d'accueil du site
@@ -77,9 +74,7 @@ def dispatcher(request):
     # else:
     template = loader.get_template('webApplication/dispatch.html')
     start_date = datetime.today()
-    delai = timedelta(7)
-    end_date = start_date + delai
-    jeunes_fin_hebergement_list = Jeune.objects.all() #Accueillir.objects.all().filter(datefin__lte=end_date)
+    jeunes_fin_hebergement_list = Jeune.objects.all()
     hebergeurs_list = Hebergeur.objects.all()
     context = {
         'jeunes_fin_hebergement_list' : jeunes_fin_hebergement_list,
@@ -152,36 +147,36 @@ def modifyHebergeur(request):
         facebook = request.POST['facebook']
 
         if request.POST['signatureCharte'] == "True":
-            signatureCharte = True
+            signature_charte = True
         else:
-            signatureCharte = False
+            signature_charte = False
             
-        capaciteAccueil = request.POST['capaciteAccueil']
-        nbLitsSimples = request.POST['nbLitsSimples']
-        nbLitsDoubles = request.POST['nbLitsDoubles']
-        disponibiliteDebut = request.POST['dispoDebut']
-        disponibiliteFin = request.POST['dispoFin']
+        capacite_accueil = request.POST['capaciteAccueil']
+        nb_lits_simples = request.POST['nbLitsSimples']
+        nb_lits_doubles = request.POST['nbLitsDoubles']
+        disponibilite_debut = request.POST['dispoDebut']
+        disponibilite_fin = request.POST['dispoFin']
         commentaires = request.POST['commentaires']
 
         #Si la personne existe, on la met à jour
         if request.POST['idpersonne']:
-            hebergeurId = request.POST['idpersonne']
-            objPersonne, personneCreated = Personne.objects.update_or_create(idpersonne = hebergeurId, defaults={'nom' : nom, 'prenom' : prenom, 'numtel' : telephone, 'commentaire' : commentaires,})
+            hebergeur_id = request.POST['idpersonne']
+            obj_personne, personne_created = Personne.objects.update_or_create(idpersonne = hebergeur_id, defaults={'nom' : nom, 'prenom' : prenom, 'numtel' : telephone, 'commentaire' : commentaires,})
         #Si elle n'existe pas, on la crée
         else:
-            objPersonne = Personne.objects.create(nom = nom, prenom = prenom, numtel = telephone, commentaire = commentaires)
+            obj_personne = Personne.objects.create(nom = nom, prenom = prenom, numtel = telephone, commentaire = commentaires)
         #On associe l'hébergeur à une personne
-        objHebergeur, hebergeurCreated = Hebergeur.objects.update_or_create(adressemail = mail, defaults={'idpersonne' : objPersonne, 'facebook' : facebook, 'signaturecharte' : signatureCharte, 'adressepostale' : adresse, 'capaciteaccueil' : capaciteAccueil, 'nblitsimple' : nbLitsSimples, 'nblitdouble' : nbLitsDoubles,})
+        obj_hebergeur, hebergeurCreated = Hebergeur.objects.update_or_create(adressemail = mail, defaults={'idpersonne' : obj_personne, 'facebook' : facebook, 'signaturecharte' : signature_charte, 'adressepostale' : adresse, 'capaciteaccueil' : capacite_accueil, 'nblitsimple' : nb_lits_simples, 'nblitdouble' : nb_lits_doubles,})
 
         #On vérifie que les dates ne sont pas nulles
-        matchDateDebut = re.match(r"\d{4}-\d{2}-\d{2}",disponibiliteDebut)
-        matchDateFin = re.match(r"\d{4}-\d{2}-\d{2}",disponibiliteFin)
+        matchDateDebut = re.match(r"\d{4}-\d{2}-\d{2}",disponibilite_debut)
+        matchDateFin = re.match(r"\d{4}-\d{2}-\d{2}",disponibilite_fin)
 
         #Si on a deux dates correctes, on ajoute les disponibilités dans la BDD
         if matchDateDebut and matchDateFin:
-            objDispo = Disponibilite.objects.update_or_create(adressemail = objHebergeur, defaults={'datedebut' : disponibiliteDebut, 'datefin' : disponibiliteFin})
+            objDispo = Disponibilite.objects.update_or_create(adressemail = obj_hebergeur, defaults={'datedebut' : disponibilite_debut, 'datefin' : disponibilite_fin})
         else:
-            Disponibilite.objects.select_related().filter(adressemail = objHebergeur).delete()
+            Disponibilite.objects.select_related().filter(adressemail = obj_hebergeur).delete()
 
     return redirect('listeHebergeurs')        
 
@@ -204,17 +199,17 @@ def modifyJeune(request):
         nom = request.POST['nom']
         prenom = request.POST['prenom']
         telephone = request.POST['telephone']
-        dateNaissance = request.POST['dateNaissance']
-        datePriseEnCharge = request.POST['datePriseEnCharge']
-        signalePar = request.POST['signalePar']
-        suiviPar = request.POST['suiviPar']
+        date_naissance = request.POST['dateNaissance']
+        date_prise_en_charge = request.POST['datePriseEnCharge']
+        signale_par = request.POST['signalePar']
+        suivi_par = request.POST['suiviPar']
 
         if request.POST['suiviadji'] == "True":
             suiviadji = True
         else:
             suiviadji = False
 
-        nomJuge = request.POST['nomJuge']
+        nom_juge = request.POST['nomJuge']
 
         if request.POST['demie'] == "True":
             demie = True
@@ -232,30 +227,30 @@ def modifyJeune(request):
             appel = False
 
         if request.POST['testOsseux'] == "True":
-            testOsseux = True
+            test_osseux = True
         else:
-            testOsseux = False
+            test_osseux = False
 
         sante = request.POST['sante']
         commentaires = request.POST['commentaires']
 
         #On traite les dates dans le cas ou une date du formulaire n'ai pas été remplie
-        if not re.match(r"\d{4}-\d{2}-\d{2}",dateNaissance):
-            dateNaissance = None
+        if not re.match(r"\d{4}-\d{2}-\d{2}",date_naissance):
+            date_naissance = None
 
-        if not re.match(r"\d{4}-\d{2}-\d{2}",datePriseEnCharge):
-            datePriseEnCharge = None
+        if not re.match(r"\d{4}-\d{2}-\d{2}",date_prise_en_charge):
+            date_prise_en_charge = None
 
         #Si la personne existe, on la met à jour
         if request.POST['idpersonne']:
-            jeuneId = request.POST['idpersonne']
-            objPersonne, personneCreated = Personne.objects.update_or_create(idpersonne = jeuneId, defaults={'nom' : nom, 'prenom' : prenom, 'numtel' : telephone, 'commentaire' : commentaires,})
+            jeune_id = request.POST['idpersonne']
+            obj_personne, personne_created = Personne.objects.update_or_create(idpersonne = jeune_id, defaults={'nom' : nom, 'prenom' : prenom, 'numtel' : telephone, 'commentaire' : commentaires,})
         #Si elle n'existe pas, on la crée
         else:
-            objPersonne = Personne.objects.create(nom = nom, prenom = prenom, numtel = telephone, commentaire = commentaires)
+            obj_personne = Personne.objects.create(nom = nom, prenom = prenom, numtel = telephone, commentaire = commentaires)
         
         #On associe le jeune à une personne
-        objJeune, jeuneCreated = Jeune.objects.update_or_create(idpersonne = objPersonne, defaults={'datenaissance' : dateNaissance, 'datepriseencharge' : datePriseEnCharge, 'signalerpar' : signalePar, 'suivipar' : suiviPar, 'suiviadji' : suiviadji, 'nomjuge' : nomJuge, 'demie' : demie, 'recours' : recours, 'appel' : appel, 'testosseux' : testOsseux, 'sante' : sante, 'idecole' : get_object_or_404(Ecole, idecole=1), 'idavocat' : get_object_or_404(Avocat, idavocat=1), 'pays' : get_object_or_404(Nationalite, pays="France")})
+        objJeune, jeuneCreated = Jeune.objects.update_or_create(idpersonne = obj_personne, defaults={'datenaissance' : date_naissance, 'datepriseencharge' : date_prise_en_charge, 'signalerpar' : signale_par, 'suivipar' : suivi_par, 'suiviadji' : suiviadji, 'nomjuge' : nom_juge, 'demie' : demie, 'recours' : recours, 'appel' : appel, 'testosseux' : test_osseux, 'sante' : sante, 'idecole' : get_object_or_404(Ecole, idecole=1), 'idavocat' : get_object_or_404(Avocat, idavocat=1), 'pays' : get_object_or_404(Nationalite, pays="France")})
 
     return redirect('listeJeunes')        
 

@@ -218,9 +218,6 @@ class Jeune(models.Model):
     
     def get_fin_hebergement(self):
         date_fin = Accueillir.objects.order_by('dateFin')[:1].get(pk=self.get_idpersonne())
-        # date_fin = Accueillir.objects.get(pk=self.get_idpersonne())
-        # date_fin = self.idpersonne.nom
-        # date_fin.strftime("%d/%m/%Y")
         return date_fin
         
 
@@ -435,12 +432,8 @@ class Nationalite(models.Model):
 class Personne(models.Model):
     
     def get_fin_hebergement(self):
-        # date_fin = Accueillir.objects.order_by('datefin')[:1]
         date_fin = Accueillir.objects.order_by('datefin').get(pk=self.get_idpersonne())[:1]
-        # date_fin = Accueillir.objects.get(pk=self.get_idpersonne())
         date = date_fin.dateFin
-        # date_fin = Accueillir.objects.all()
-        # date_fin = self.nom
         return date.strftime("%d/%m/%Y")
     
         
