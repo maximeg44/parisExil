@@ -171,12 +171,13 @@ def modifyHebergeur(request):
         #On vérifie que les dates ne sont pas nulles
         match_date_debut = re.match(r"\d{4}-\d{2}-\d{2}",disponibilite_debut)
         match_date_fin = re.match(r"\d{4}-\d{2}-\d{2}",disponibilite_fin)
+        
+        Disponibilite.objects.select_related().filter(adressemail = obj_hebergeur).delete()
 
         #Si on a deux dates correctes, on ajoute les disponibilités dans la BDD
         if match_date_debut and match_date_fin:
             obj_dispo = Disponibilite.objects.update_or_create(adressemail = obj_hebergeur, defaults={'datedebut' : disponibilite_debut, 'datefin' : disponibilite_fin})
-        else:
-            Disponibilite.objects.select_related().filter(adressemail = obj_hebergeur).delete()
+            
 
     return redirect('listeHebergeurs')        
 
