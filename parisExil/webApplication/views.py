@@ -166,7 +166,7 @@ def modifyHebergeur(request):
         else:
             obj_personne = Personne.objects.create(nom = nom, prenom = prenom, numtel = telephone, commentaire = commentaires)
         #On associe l'hébergeur à une personne
-        obj_hebergeur, hebergeurCreated = Hebergeur.objects.update_or_create(adressemail = mail, defaults={'idpersonne' : obj_personne, 'facebook' : facebook, 'signaturecharte' : signature_charte, 'adressepostale' : adresse, 'capaciteaccueil' : capacite_accueil, 'nblitsimple' : nb_lits_simples, 'nblitdouble' : nb_lits_doubles,})
+        obj_hebergeur, hebergeur_created = Hebergeur.objects.update_or_create(adressemail = mail, defaults={'idpersonne' : obj_personne, 'facebook' : facebook, 'signaturecharte' : signature_charte, 'adressepostale' : adresse, 'capaciteaccueil' : capacite_accueil, 'nblitsimple' : nb_lits_simples, 'nblitdouble' : nb_lits_doubles,})
 
         #On vérifie que les dates ne sont pas nulles
         match_date_debut = re.match(r"\d{4}-\d{2}-\d{2}",disponibilite_debut)
@@ -174,7 +174,7 @@ def modifyHebergeur(request):
 
         #Si on a deux dates correctes, on ajoute les disponibilités dans la BDD
         if match_date_debut and match_date_fin:
-            objDispo = Disponibilite.objects.update_or_create(adressemail = obj_hebergeur, defaults={'datedebut' : disponibilite_debut, 'datefin' : disponibilite_fin})
+            obj_dispo = Disponibilite.objects.update_or_create(adressemail = obj_hebergeur, defaults={'datedebut' : disponibilite_debut, 'datefin' : disponibilite_fin})
         else:
             Disponibilite.objects.select_related().filter(adressemail = obj_hebergeur).delete()
 
