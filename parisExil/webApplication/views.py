@@ -257,7 +257,6 @@ def modifyJeune(request):
 
 # Méthode associée à la page de connexion
 def connexion(request):
-    error = False
     if request.method == "POST":
         user = request.POST['user']
         pwd = request.POST['pwd']
