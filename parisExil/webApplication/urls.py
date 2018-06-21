@@ -22,4 +22,5 @@ urlpatterns = [
     path('jeuneCreateOrUpdate/<int:jeune_id>/', views.jeuneCreateOrUpdate, name='jeuneCreateOrUpdate'),
     path('modifyJeune/', views.modifyJeune, name='modifyJeune'),
     path('listeJeunes/delete/<int:pk>/', views.deleteJeune, name='deleteJeune'),
+    path('deconnexion', views.deconnexion, name='deconnexion'),
 ]

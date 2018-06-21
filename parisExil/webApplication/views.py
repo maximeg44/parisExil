@@ -4,7 +4,7 @@ from .models import Personne, Jeune, Accueillir, Parler, Hebergeur, Disponibilit
 from django.shortcuts import render, get_object_or_404, redirect
 from datetime import datetime
 from _datetime import timedelta
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 import re
 
 # Méthode associé à la page d'accueil du site
@@ -267,6 +267,11 @@ def connexion(request):
             login(request, user_obj)
             return render(request, 'webApplication/index.html', locals())
     return render(request, 'webApplication/connexion.html', locals())
+
+# Méthode associée à la déconnexion
+def deconnexion(request):
+    logout(request)
+    return render(request, 'webApplication/connexion.html')
 
 # Méthode qui permet de supprimer l'hébergeur séléctionné
 def deleteHebergeur(request, pk):
